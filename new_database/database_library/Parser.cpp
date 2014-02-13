@@ -4,26 +4,49 @@ Parser::Parser() {}
 
 void Parser::processInput(string _input)
 {
-  //string input = 
-  InputType c = getInputType(_input);
-  switch(c)
+  try
   {
-  case QUERY:
-    processQuery(_input);
-    break;
-  default:
-    processCommand(c);
-    break;
+    InputType type = getInputType(_input);
+    switch(type)
+    {
+    case QUERY:
+      processQuery(_input);
+      break;
+    default:
+      processCommand(type);
+      break;
+    }
+  }
+  catch(exception& e)
+  {
+    cout << "Exception: " << e.what() << endl;
   }
 }
 
 void Parser::processQuery(string _input)
 {
+  string input = _input;
+  string relation_name;
   smatch m;
-  if (regex_search(_input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]+")))
-  {
 
+  // query ::= relation-name <- expr;
+  if (regex_search(input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]*<-[[:blank:]]*")))
+  {
+    // Extract relation-name from input string
+    relation_name = m[1].str();
+
+    // Strip off 'relation-name <-' and any spaces after
+    input = m.suffix.str();
+
+    // DEBUG
+    cout << input << endl;
   }
+  else
+  {
+    throw runtime_error("Invalid Input");
+  }
+
+  Table t = expression(input);
 }
 
 void Parser::processCommand(InputType _inType)
@@ -31,9 +54,9 @@ void Parser::processCommand(InputType _inType)
 
 }
 
-void Parser::getToken(string& _input)
+Table Parser::expression(string _input)
 {
-  
+
 }
 
 InputType Parser::getInputType(string _input)
@@ -86,6 +109,6 @@ InputType Parser::getInputType(string _input)
   }
   else
   {
-    throw runtime_error("Invalid input");
+    throw runtime_error("Invalid Input");
   }
 }

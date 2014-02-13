@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum Expression
+enum ExpressionType
 {
   ATOMIC_EXPR, SELECT, PROJECT, RENAME, 
   UNION, DIFFERENCE, PRODUCT, NATURAL_JOIN
@@ -38,8 +38,10 @@ private:
 
 public:
   Parser();
+
+  Table expression(string _input);
+
   void processInput(string _input);
-  void getToken(string& _input);
   InputType getInputType(string _input);
   
   void processQuery(string _input);

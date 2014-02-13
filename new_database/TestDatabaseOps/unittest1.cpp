@@ -228,7 +228,7 @@ namespace TestDatabaseOps
     TEST_METHOD(ParserTest)
 		{
       Parser p;
-      Assert::AreEqual((int)p.getInputType(string(" dogs<-select(kind==\"dogs\"animals")), (int)QUERY);
+      Assert::AreEqual((int)p.getInputType(string(" CREATE TABLE <-select(kind==\"dogs\"animals")), (int)CREATE);
     }
 	};
 }
