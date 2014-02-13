@@ -39,7 +39,7 @@ void Parser::getToken(string& _input)
 InputType Parser::getInputType(string _input)
 {
   smatch m;
-  if (regex_search(_input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]+")))
+  if (regex_search(_input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]*")))
   {
     string op = m[1].str();
 
