@@ -1,3 +1,6 @@
+#ifndef DATABASE_H
+#define DATABASE_H
+
 #include <string> 
 #include <vector> 
 #include "Table.h" 
@@ -43,3 +46,5 @@ public:
     void update_table_name(string new_name, string old_name); 
     Table& get_table(string table_name); 
 };
+
+#endif
