@@ -14,9 +14,14 @@ enum Expression
   UNION, DIFFERENCE, PRODUCT, NATURAL_JOIN
 };
 
-enum Command { 
+enum InputType
+{
+  // Commands
   OPEN, CLOSE, WRITE, EXIT, SHOW, 
-  CREATE, UPDATE, INSERT, DELETE, QUERY
+  CREATE, UPDATE, INSERT, DELETE,
+  
+  // Query
+  QUERY
 };
 
 class Token
@@ -35,8 +40,9 @@ public:
   Parser();
   void processInput(string _input);
   void getToken(string& _input);
-  Command getCommand(string _input);
+  InputType getInputType(string _input);
   
   void processQuery(string _input);
+  void processCommand(InputType _inType);
 };
 #endif

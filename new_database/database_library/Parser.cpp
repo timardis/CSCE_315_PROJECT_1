@@ -5,41 +5,14 @@ Parser::Parser() {}
 void Parser::processInput(string _input)
 {
   //string input = 
-  Command c = getCommand(_input);
+  InputType c = getInputType(_input);
   switch(c)
   {
   case QUERY:
     processQuery(_input);
     break;
-  case OPEN:
-
-    break;
-  case CLOSE:
-
-    break;
-  case WRITE:
-
-    break;
-  case EXIT:
-
-    break;
-  case SHOW:
-
-    break;
-  case CREATE:
-
-    break;
-  case UPDATE:
-
-    break;
-  case INSERT:
-
-    break;
-  case DELETE:
-
-    break;
   default:
-
+    processCommand(c);
     break;
   }
 }
@@ -53,16 +26,17 @@ void Parser::processQuery(string _input)
   }
 }
 
+void Parser::processCommand(InputType _inType)
+{
 
-
-
+}
 
 void Parser::getToken(string& _input)
 {
   
 }
 
-Command Parser::getCommand(string _input)
+InputType Parser::getInputType(string _input)
 {
   smatch m;
   if (regex_search(_input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]+")))
