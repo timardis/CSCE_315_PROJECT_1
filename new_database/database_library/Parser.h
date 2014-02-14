@@ -47,5 +47,11 @@ public:
   
   void processQuery();
   void processCommand();
+  
+  // Command functions
+  void createTable();
+
+
+
 };
 #endif

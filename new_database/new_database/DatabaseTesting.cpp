@@ -1,4 +1,6 @@
-#include "Database.h" 
+#include "Database.h"
+#include "Parser.h"
+
 #include <iostream> 
   
 using namespace std; 
@@ -218,6 +220,9 @@ int main(){
         db.join("join", table_name1, table_name2); 
         db.show("join"); 
   
+        Parser p;
+        p.processInput(string(" CREATE TABLE select <-  (kind == \"dogs\") "));
+
         cin >> i; 
       
 }
