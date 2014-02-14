@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include "Database.h"
+#include "Tokenizer.h"
 #include <iostream>
 #include <string>
 #include <regex>
@@ -24,17 +25,17 @@ enum InputType
   QUERY
 };
 
-class Token
-{
-public:
-  string str_value;
-};
-
 class Parser
 {
 private:
   Database db;
-  vector<Token> token_vec;
+
+  
+  Tokenizer tokenizer;
+  // 'Bridge' functions for the Tokenizer
+  //string pop() {return tokenizer.pop();}
+  //string peek() {return tokenizer.peek();}
+  //void tokenizeInput(string _input) {tokenizer.tokenizeInput(_input);}
 
 public:
   Parser();
@@ -44,7 +45,7 @@ public:
   void processInput(string _input);
   InputType getInputType(string _input);
   
-  void processQuery(string _input);
-  void processCommand(InputType _inType);
+  void processQuery();
+  void processCommand();
 };
 #endif
