@@ -6,14 +6,30 @@ void Parser::processInput(string _input)
 {
   try
   {
-    InputType type = getInputType(_input);
+    // Tokenize the input, divide the string input into minimal units
+    tokenizer.tokenizeInput(_input);
+    
+    string token;
+
+    // Check if there is any token
+    if(tokenizer.remainingTokens() > 0)
+    {
+      token = tokenizer.peek();
+    }
+    else
+    {
+      // Most likely blank line, return
+      return;
+    }
+
+    InputType type = getInputType(token);
     switch(type)
     {
     case QUERY:
-      processQuery(_input);
+      processQuery();
       break;
     default:
-      processCommand(type);
+      processCommand();
       break;
     }
   }
@@ -23,40 +39,37 @@ void Parser::processInput(string _input)
   }
 }
 
-void Parser::processQuery(string _input)
+void Parser::processQuery()
 {
-  string input = _input;
-  string relation_name;
-  smatch m;
+  //
+  string relation_name = tokenizer.pop();
 
   // query ::= relation-name <- expr;
-  if (regex_search(input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]*<-[[:blank:]]*")))
+  string t1 = tokenizer.pop();
+  string t2 = tokenizer.pop();
+
+  if (t1 == "<")
   {
-    // Extract relation-name from input string
-    relation_name = m[1].str();
 
-    // Strip off 'relation-name <-' and any spaces after
-    input = m.suffix.str();
-
-    // DEBUG
-    cout << input << endl;
   }
   else
   {
     throw runtime_error("Invalid Input");
   }
 
-  Table t = expression(input);
+  //Table t = expression(input);
 }
 
-void Parser::processCommand(InputType _inType)
+void Parser::processCommand()
 {
 
 }
 
 Table Parser::expression(string _input)
 {
-
+  // Dummy code to compile
+  Table* t = NULL;
+  return *t;
 }
 
 InputType Parser::getInputType(string _input)

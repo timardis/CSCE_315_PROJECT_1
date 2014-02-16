@@ -12,15 +12,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Column.cpp" />
+    <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Table.cpp" />
+    <ClCompile Include="Tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Column.h" />
+    <ClInclude Include="Condition.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Table.h" />
+    <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Tuple.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{81C744A2-4DF7-4072-8821-1BDDBDA1F78E}</ProjectGuid>
