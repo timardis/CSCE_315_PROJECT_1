@@ -11,37 +11,44 @@ enum Comp_Operator{
   LESS, LESS_EQUAL
 };
 
+class Condition;
+
 class Comparison
 {
-public:
-  Comparison() {};
-  Comparison(Tokenizer& tokenizer);
+  bool is_condition;
+  Condition main_condition;
   string lhs;         // name of attribute to be compared
   Comp_Operator op;   
-  string rhs;         // value to be compared against
+  string rhs;  
+public:
+  Comparison() {};
+  Comparison(Tokenizer& tokenizer);       // value to be compared against
 
-  bool evaluate_tuple(Tuple tup);
+  bool evaluate_tuple(Tuple& tup);
 };
 
 class Conjunction
 {
+  bool has_optional_comparison;
+  Comparison main_comparison;
+  Comparison optional_comparison;
 public:
   Conjunction() {};
   Conjunction(Tokenizer& tokenizer);
-  Comparison main_comparison;
-  Comparison optional_comparison;
 
-  bool evaluate_tuple(Tuple tup);
+  bool evaluate_tuple(Tuple& tup);
 };
+
 class Condition
 {
+  bool has_optional_conjunction;
+  Conjunction main_conjunction;
+  Conjunction optional_conjunction;
 public:
   Condition() {};
   Condition(Tokenizer& tokenizer);
-  Conjunction main_conjunction;
-  Conjunction optional_conjunction;
 
-  bool evaluate_tuple(Tuple tup);
+  bool evaluate_tuple(Tuple& tup);
 };
 
 
