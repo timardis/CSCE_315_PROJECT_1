@@ -1,4 +1,4 @@
-﻿Build started 2/16/2014 4:37:12 PM.
+﻿Build started 2/16/2014 5:21:09 PM.
      1>Project "C:\Users\timardis\csce_315\Database\DatabaseMain\DatabaseMain.vcxproj" on node 3 (Build target(s)).
      1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\timardis\csce_315\Database\Debug\DatabaseMain.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\timardis\csce_315\Database\Debug\DatabaseMain.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\timardis\csce_315\Database\Debug\DatabaseMain.lib" /MACHINE:X86 Debug\main.obj
@@ -8,4 +8,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.33
+Time Elapsed 00:00:00.21
