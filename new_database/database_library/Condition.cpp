@@ -6,14 +6,28 @@ Comparison::Comparison(Tokenizer& tokenizer)
   if(tokenizer.peek() == "(")
   {
     main_condition = Condition(tokenizer);
-    is_condition = false;
+    is_condition = true;
   }
   else
   {
     lhs = tokenizer.pop();
     string op_tok = tokenizer.pop();
+    if(op_tok == ">")
+      op = GREATER;
+    else if(op_tok == ">=")
+      op = GREATER_EQUAL;
+    else if(op_tok == "==")
+      op = EQUAL;
+    else if(op_tok == "!=")
+      op = NOT_EQUAL;
+    else if(op_tok == "<")
+      op = LESS;
+    else if(op_tok == "<=")
+      op = LESS_EQUAL;
+    else
+      throw runtime_error("Invalid Comparison Operator Input");
+    rhs = tokenizer.pop();
   }
-
 }
 
 bool Comparison::evaluate_tuple(Tuple& tup)
