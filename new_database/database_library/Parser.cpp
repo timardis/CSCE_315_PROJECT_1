@@ -48,14 +48,11 @@ void Parser::processQuery()
   string t1 = tokenizer.pop();
   string t2 = tokenizer.pop();
 
-  if (t1 == "<")
+  if (t1 != "<-")
   {
-
+	    throw runtime_error("Invalid Input");
   }
-  else
-  {
-    throw runtime_error("Invalid Input");
-  }
+  expression(relation_name);
 
 }
 
@@ -107,13 +104,6 @@ void Parser::exit(){
 
 void Parser::show(string table_name){
 	db.show(table_name);
-}
-
-Table Parser::expression(string _input)
-{
-  // Dummy code to compile
-  Table* t = NULL;
-  return *t;
 }
 
 InputType Parser::getInputType(string _input)
@@ -168,6 +158,34 @@ InputType Parser::getInputType(string _input)
   {
     throw runtime_error("Invalid Input");
   }
+}
+
+ExpressionType Parser::getExpressionType(string _input){
+	if(_input == "select"){
+		return SELECT;
+	}
+	else if(_input == "project"){
+		return PROJECT;
+	}
+	else if(_input == "rename"){
+		return RENAME;
+	}
+	else if(_input == "+"){
+		return UNION;
+	}
+	else if(_input == "-"){
+		return DIFFERENCE;
+	}
+	else if(_input == "*"){
+		return PRODUCT;
+	}
+	else if(_input == "JOIN"){
+		return NATURAL_JOIN;
+	}
+	else{
+		return ATOMIC_EXPR;
+	}
+
 }
 
 void Parser::createTable(){
@@ -318,4 +336,103 @@ vector<string> Parser::get_keys(){
 
 	return key;
 
+}
+
+string Parser::expression(){
+	string tok = tokenizer.pop();
+	string view_name;
+	ExpressionType ex = getExpressionType(tok);
+	if(ex == SELECT){
+	}
+	else if(ex == PROJECT){
+	}
+	else if(ex == RENAME){
+	}
+	else{
+		view_name = atomic_expression();
+		ExpressionType ex1 = getExpressionType(tok);
+		if(ex1 == UNION){
+		}
+		else if(ex1 == DIFFERENCE){
+		}
+		else if(ex1 == PRODUCT){
+		}
+		else if(ex1 == NATURAL_JOIN){
+		}
+	}
+	return view_name;
+}
+
+string Parser::atomic_expression(){
+	string view_name;
+	string tok = tokenizer.pop();
+	if(tok == "("){
+		view_name = expression();
+		string tok1 = tokenizer.pop();
+		if(tok1 != ")"){
+			throw runtime_error("atomic expression: unexpected symbol");
+
+		}
+	}
+	else{
+		view_name = tok;
+	}
+	return view_name;
+}
+
+string Parser::selection(){
+	string view_name = get_dummy_view_name();// = relation_name;
+	int brack = 0;
+	vector<string> condition_data;
+	while(brack!= 2){
+		string tok = tokenizer.pop();
+		if(tok == "(" || tok == ")"){
+			brack++;
+		}
+		else if(tok == "\""){
+			continue;
+		}
+		else{
+			condition_data.push_back(tok);
+		}
+	}
+	string table_name = atomic_expression();
+
+}
+
+
+template <class T> bool Parser::compare(T left_arg, T right_arg, Operation op) {
+	bool ret_val;
+	
+	switch(op) {
+		case EQUAL:
+			ret_val = left_arg == right_arg;
+			break;
+		case NOT_EQUAL:
+			ret_val = left_arg != right_arg;
+			break;
+		case LESS:
+			ret_val = left_arg < right_arg;
+			break;
+		case GREATER:
+			ret_val = left_arg > right_arg;
+			break;
+		case GEQ:
+			ret_val = left_arg >= right_arg;
+			break;
+		case LEQ:
+			ret_val = left_arg <= right_arg;
+			break;
+		default:
+			throw runtime_error("compare: unexpected error");
+			break;
+	}
+	
+	return ret_val;
+}
+
+string Parser::get_dummy_view_name(){
+	string view_name = to_string(view_num);
+	++view_num;
+	return view_name;
 }

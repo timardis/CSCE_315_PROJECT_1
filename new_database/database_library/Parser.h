@@ -26,6 +26,10 @@ enum InputType
   QUERY
 };
 
+enum Operation{
+	EQUAL, NOTEQUAL, LESS, GREATER, LEQ, GEQ
+};
+
 class Parser
 {
 private:
@@ -40,12 +44,11 @@ private:
 
 public:
   Parser();
-
-  Table expression(string _input);
+  int view_name;
 
   void processInput(string _input);
   InputType getInputType(string _input);
-  
+  ExpressionType getExpressionType(string _input);
   void processQuery();
   void processCommand(InputType t);
   void open(string relation_name);
@@ -57,11 +60,16 @@ public:
   void createTable();
   void insert_into();
 
+  //Query functions
+  string selection();
+
   //helper functions
   pair<vector<string>, vector<string>> get_typed_attribute_list();
   vector<string> get_keys();
   string get_attribute_type();
-
+  string expression();
+  template <class T> bool compare(T left_arg, T right_arg, Operation op);
+  string atomic_expression();
 
 
 };
