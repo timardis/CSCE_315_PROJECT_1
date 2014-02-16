@@ -8,6 +8,7 @@ Tokenizer::Tokenizer()
 
 void Tokenizer::tokenizeInput(string input)
 {
+	tokens.clear();
   stringstream line_stream(input);
 	string _input;
 	while (line_stream >> _input){

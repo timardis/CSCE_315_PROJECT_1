@@ -65,6 +65,9 @@ void Parser::processCommand(InputType type)
 	case CREATE:
 		createTable();
 		break;
+	case INSERT:
+		insert_into();
+		break;
 	default:
 		break;
 	}
@@ -185,6 +188,44 @@ void Parser::createTable(){
 	}
 }
 
+void Parser::insert_into(){
+	string tok0 = tokenizer.pop();
+	string tok1 = tokenizer.pop();
+	cout << tok1 << endl;
+	if(tok1 != "INTO"){
+		throw runtime_error("wrong function call for INSERT INTO\n");
+	}
+	string table_name = tokenizer.pop();
+	Table& t = db.get_table(table_name);
+	string tok2 =  tokenizer.pop();
+	string tok3 =  tokenizer.pop();
+	if(tok2!= "VALUES" || tok3 != "FROM"){
+		throw runtime_error("wrong function call for INSERT INTO\n");
+	}
+	string tok4 = tokenizer.peek();
+	if(tok4 == "RELATION"){
+		//call function with relation
+	}
+	else{
+		int brack_count = 0;
+		vector<string> data;
+		while(brack_count != 2)	{
+			string tok = tokenizer.pop();
+			if(tok == "(" || tok == ")"){
+				brack_count++;
+			}
+			else if(tok == "\"" || tok == ","){
+				continue;
+			}
+			else{
+				data.push_back(tok);
+			}
+		}
+		cout << data.size();
+		t.put_row(data);
+		db.show(table_name);
+	}
+}
 
 pair<vector<string>, vector<string>> Parser::get_typed_attribute_list(){
 	pair<vector<string>, vector<string>> typed_attribute_lists;

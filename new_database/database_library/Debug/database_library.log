@@ -1,0 +1,17 @@
+﻿Build started 2/16/2014 4:07:51 PM.
+     1>Project "C:\Users\richa123\Documents\GitHub\CSCE_315_PROJECT_1\new_database\database_library\database_library.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Parser.cpp
+         Parser.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\richa123\Documents\GitHub\CSCE_315_PROJECT_1\new_database\Debug\database_library.lib" /NOLOGO Debug\Column.obj
+         Debug\Database.obj
+         Debug\Parser.obj
+         Debug\Table.obj
+         Debug\Tokenizer.obj
+         database_library.vcxproj -> C:\Users\richa123\Documents\GitHub\CSCE_315_PROJECT_1\new_database\Debug\database_library.lib
+     1>Done Building Project "C:\Users\richa123\Documents\GitHub\CSCE_315_PROJECT_1\new_database\database_library\database_library.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.52

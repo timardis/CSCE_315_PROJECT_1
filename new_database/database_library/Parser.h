@@ -55,7 +55,7 @@ public:
   
   // Command functions
   void createTable();
-
+  void insert_into();
 
   //helper functions
   pair<vector<string>, vector<string>> get_typed_attribute_list();
