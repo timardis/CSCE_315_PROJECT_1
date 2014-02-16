@@ -8,6 +8,8 @@ Tokenizer::Tokenizer()
 
 void Tokenizer::tokenizeInput(string input)
 {
+  reinitialize();
+
   stringstream line_stream(input);
 	string _input;
 	while (line_stream >> _input){
@@ -120,7 +122,8 @@ void Tokenizer::tokenizeInput(string input)
 
 void Tokenizer::reinitialize()
 {
-
+  tokens.clear();
+  currentIndex = -1;
 }
 
 string Tokenizer::peek()
