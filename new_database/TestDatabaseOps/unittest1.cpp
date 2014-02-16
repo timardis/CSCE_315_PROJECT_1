@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "Database.h"
+#include "Parser.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -224,5 +225,10 @@ namespace TestDatabaseOps
 		Assert::AreEqual(db.join("join", table_name1, table_name2).get_row(0).at(2), (string) "Sales");
 		}
 
+    TEST_METHOD(ParserTest)
+		{
+      Parser p;
+      Assert::AreEqual((int)p.getInputType(string(" CREATE TABLE <-select(kind==\"dogs\"animals")), (int)CREATE);
+    }
 	};
 }

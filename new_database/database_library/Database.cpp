@@ -726,3 +726,8 @@ Table& Database::get_table(string table_name){
     else
         throw runtime_error("get_table: no such table"); 
 } 
+
+void Database::exit(){
+	RELATIONAL_LIST.clear();
+	VIEWING_LIST.clear();
+}
