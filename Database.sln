@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Database", "Database\Database.vcxproj", "{D440B723-697D-4788-8EC6-95F30A16BDC5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DatabaseTest", "DatabaseTest\DatabaseTest.vcxproj", "{392652EE-41ED-4A9D-A077-C52DC1011928}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DatabaseMain", "DatabaseMain\DatabaseMain.vcxproj", "{E26E0ACB-4A66-461A-B993-4966BCAD790E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D440B723-697D-4788-8EC6-95F30A16BDC5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D440B723-697D-4788-8EC6-95F30A16BDC5}.Debug|Win32.Build.0 = Debug|Win32
+		{D440B723-697D-4788-8EC6-95F30A16BDC5}.Release|Win32.ActiveCfg = Release|Win32
+		{D440B723-697D-4788-8EC6-95F30A16BDC5}.Release|Win32.Build.0 = Release|Win32
+		{392652EE-41ED-4A9D-A077-C52DC1011928}.Debug|Win32.ActiveCfg = Debug|Win32
+		{392652EE-41ED-4A9D-A077-C52DC1011928}.Debug|Win32.Build.0 = Debug|Win32
+		{392652EE-41ED-4A9D-A077-C52DC1011928}.Release|Win32.ActiveCfg = Release|Win32
+		{392652EE-41ED-4A9D-A077-C52DC1011928}.Release|Win32.Build.0 = Release|Win32
+		{E26E0ACB-4A66-461A-B993-4966BCAD790E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E26E0ACB-4A66-461A-B993-4966BCAD790E}.Debug|Win32.Build.0 = Debug|Win32
+		{E26E0ACB-4A66-461A-B993-4966BCAD790E}.Release|Win32.ActiveCfg = Release|Win32
+		{E26E0ACB-4A66-461A-B993-4966BCAD790E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
