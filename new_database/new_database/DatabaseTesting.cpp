@@ -108,8 +108,8 @@ int main(){
   
           
         cout << "TEST SELECT(): select row 3 and row 5 of relation 1\n"; 
-        db.select("view1", title, 0); 
-        db.select("view1", title, 2); 
+        //db.select("view1", title, 0); 
+        //db.select("view1", title, 2); 
         db.show("view1"); 
         cout << "\n\n"; 
       

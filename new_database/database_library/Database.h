@@ -3,7 +3,8 @@
 
 #include <string> 
 #include <vector> 
-#include "Table.h" 
+#include "Table.h"
+#include "Condition.h"
    
 using namespace std; 
    
@@ -18,7 +19,7 @@ private:
    
 public: 
     // Query Functions 
-    Table select(string view_name, string in_table_name, int row_index); 
+    Table select(string view_name, string in_table_name, Condition condition); 
     Table project(string view_name, string in_table_name, vector<string> attributes); 
     Table rename(string view_name, string in_table_name, vector<string> attributes); 
     Table set_union(string view_name, string table_1_name, string table_2_name); 
@@ -26,7 +27,6 @@ public:
     Table cross_product(string view_name, string table_1_name, string table_2_name); 
     Table join(string view_name, string table_1_name, string table_2_name); 
   
-       
     // Command Functions 
     //void exit(); 
     void show(string table_name); 
