@@ -1,0 +1,35 @@
+﻿Build started 2/8/2014 4:32:55 PM.
+     1>Project "C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Database\Database.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\..\GitHub\CSCE_315_PROJECT_1\CSCE_315_PROJECT_1\Database.cpp ..\..\..\..\GitHub\CSCE_315_PROJECT_1\CSCE_315_PROJECT_1\DatabaseTesting.cpp
+         Database.cpp
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(64): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(167): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(234): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(235): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(236): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(325): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(331): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(341): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(348): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(361): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(396): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(517): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(563): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\richa123\documents\github\csce_315_project_1\csce_315_project_1\database.cpp(565): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         DatabaseTesting.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Debug\Database.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Debug\Database.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Debug\Database.lib" /MACHINE:X86 Debug\Column.obj
+         Debug\Database.obj
+         Debug\DatabaseTesting.obj
+         Debug\Table.obj
+         Database.vcxproj -> C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Debug\Database.exe
+     1>Done Building Project "C:\Users\richa123\Documents\Visual Studio 2012\Projects\Database\Database\Database.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.59

@@ -161,7 +161,6 @@ Table Database::project(string view_name, string in_table_name, vector<string> a
 } 
   
 Table Database::rename(string new_view, string existing_table, vector<string> attributes){ 
-    vector<string> key_attribute_indices; 
     Table& old_table = get_table(existing_table); 
           
     // ERROR - incorrect number of attributes  
@@ -176,17 +175,16 @@ Table Database::rename(string new_view, string existing_table, vector<string> at
     } 
   
     // set new key names to reflect new attributes 
-    vector<string> attr; 
-    for(unsigned int i = 0; i < old_table.get_keys().size(); ++i) { 
-        for(unsigned int j = 0; j < old_table.get_table_columns().size(); ++j){ 
-            if(c[j].get_column_name() == old_table.get_table_columns()[j].get_column_name()){ 
-                  
-                c[j].set_column_name(attributes[j]); 
-            } 
-            attr.push_back(attributes[j]); 
+	vector<string> attr = old_table.get_keys();
+
+        for(unsigned int i = 0; i < old_table.get_table_columns().size(); ++i){ 
+            if(c[i].get_column_name() == old_table.get_table_columns()[i].get_column_name()){   
+                c[i].set_column_name(attributes[i]); 
+            }
   
         } 
-    } 
+    
+
     Table t(new_view, c); 
     t.set_keys(attr); 
   
@@ -224,7 +222,9 @@ Table Database::set_union(string view_name, string table1_name, string table2_na
     // copy tuples from relation 2 to view table 
     for(unsigned int i = 0; i < table2.get_table_columns().size(); ++ i){ 
             union_columns.push_back(table2.get_table_columns()[i]); 
-    } 
+    }
+
+	vector<string> key = table1.get_keys();
     // taking away duplicate columns in there 
     for(unsigned int i = 0; i < union_columns.size(); ++i){ 
         for(unsigned int j = i + 1; j < union_columns.size(); ++j){ 
@@ -234,16 +234,38 @@ Table Database::set_union(string view_name, string table1_name, string table2_na
             } 
         } 
     } 
-    //removing the duplicate 
-    for(int i = 0; i < union_columns.size(); i++){ 
-        for(int j = 0; j < union_columns[i].get_column_data().size(); j++){ 
-            for(int k = j+1; k < union_columns[i].get_column_data().size(); k++){ 
-                if(union_columns[i].get_column_data()[j] == union_columns[i].get_column_data()[k]){ 
-                    union_columns[i].delete_data(k); 
-                } 
+	vector<int> column_index_keys;
+	for(int i = 0; i < union_columns.size(); i++){
+		for(int j = 0; j < key.size(); j++){
+			if(union_columns[i].get_column_name() == key[j]){
+				column_index_keys.push_back(i);
+			}
+		}
+	}
+
+     //removing the duplicate 
+ 
+        for(int j = 0; j < union_columns[0].get_column_data().size(); j++){ 
+            for(int k = j+1; k < union_columns[0].get_column_data().size(); k++){ 
+				bool is_true = false;
+				for(int l = 0; l < column_index_keys.size(); l++){
+                if(union_columns[column_index_keys[l]].get_column_data()[j] == union_columns[column_index_keys[l]].get_column_data()[k]){ 
+                   is_true = true;
+					// union_columns[i].delete_data(k); 
+                }
+				else{
+					is_true = false;
+					l = column_index_keys.size();
+				}
+
+				}
+				if(is_true){
+					for(int i = 0; i < union_columns.size(); i++){
+						union_columns[i].delete_data(k); 
+					}
+				}
             } 
-        } 
-    } 
+        }  
   
     Table t1(view_name, union_columns); 
     VIEWING_LIST.push_back(t1); 
@@ -273,6 +295,8 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
   
     // set title and copy keys 
     vector<Column> difference_columns; 
+
+	vector<string> key = table1.get_keys();
   
     // copy relation 1 to view table 
     for(unsigned int i = 0; i < table1.get_table_columns().size(); ++i){ 
@@ -282,7 +306,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
     // copy tuples from relation 2 to view table 
     for(unsigned int i = 0; i < table2.get_table_columns().size(); ++ i){ 
             difference_columns.push_back(table2.get_table_columns()[i]); 
-    } 
+    }
     // taking away duplicate columns in there 
     for(unsigned int i = 0; i < difference_columns.size(); ++i){ 
         for(unsigned int j = i + 1; j < difference_columns.size(); ++j){ 
@@ -291,25 +315,42 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
                 difference_columns.erase(difference_columns.begin() + j); 
             } 
         } 
-    } 
-    //removing the duplicate 
-    vector<string> duplicate; 
-    for(unsigned int i = 0; i < difference_columns.size(); i++){ 
-        for(unsigned int j = 0; j < difference_columns[i].get_column_data().size(); j++){ 
-            for(unsigned int k = j+1; k < difference_columns[i].get_column_data().size(); k++){ 
-                if(difference_columns[i].get_column_data()[j] == difference_columns[i].get_column_data()[k]){ 
-                    difference_columns[i].delete_data(k); 
-  
-                    equal = true;    
-                } 
+    }
+
+	vector<int> column_index_keys;
+	for(int i = 0; i < difference_columns.size(); i++){
+		for(int j = 0; j < key.size(); j++){
+			if(difference_columns[i].get_column_name() == key[j]){
+				column_index_keys.push_back(i);
+			}
+		}
+	}
+
+
+   //removing the duplicate 
+ 
+        for(int j = 0; j < difference_columns[0].get_column_data().size(); j++){ 
+            for(int k = j+1; k < difference_columns[0].get_column_data().size(); k++){ 
+				bool is_true = false;
+				for(int l = 0; l < column_index_keys.size(); l++){
+                if(difference_columns[column_index_keys[l]].get_column_data()[j] == difference_columns[column_index_keys[l]].get_column_data()[k]){ 
+                   is_true = true;
+					// union_columns[i].delete_data(k); 
+                }
+				else{
+					is_true = false;
+					l = column_index_keys.size();
+				}
+
+				}
+				if(is_true){
+					for(int i = 0; i < difference_columns.size(); i++){
+						difference_columns[i].delete_data(k); 
+						difference_columns[i].delete_data(j); 
+					}
+				}
             } 
-            if(equal){ 
-                difference_columns[i].delete_data(j); 
-                equal = false; 
-                j = 0; 
-            } 
-        } 
-    } 
+        }  
   
   
     Table t1(view_name, difference_columns); 
@@ -723,6 +764,13 @@ Table& Database::get_table(string table_name){
   
     if((index = get_relation_index(table_name)) != -1) 
         return RELATIONAL_LIST[index]; 
+	else if((index = get_view_index(table_name)) != -1) 
+        return VIEWING_LIST[index]; 
     else
         throw runtime_error("get_table: no such table"); 
 } 
+
+void Database::exit(){
+	RELATIONAL_LIST.clear();
+	VIEWING_LIST.clear();
+}
