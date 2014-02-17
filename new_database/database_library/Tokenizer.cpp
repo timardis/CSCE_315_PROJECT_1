@@ -155,3 +155,7 @@ void Tokenizer::insertToken(string _token)
   currentIndex = 0;
 }
 
+string Tokenizer:: get_previous_data(){
+	return tokens[currentIndex-1];
+}
+

@@ -29,4 +29,6 @@ public:
 
   // return number of remaining tokens
   int remainingTokens();
+
+  string get_previous_data();
 };

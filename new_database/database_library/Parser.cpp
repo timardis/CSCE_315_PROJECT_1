@@ -1,6 +1,8 @@
 #include "Parser.h"
 
-Parser::Parser() {}
+Parser::Parser() {
+	view_num = 0;
+}
 
 void Parser::processInput(string _input)
 {
@@ -42,17 +44,18 @@ void Parser::processInput(string _input)
 void Parser::processQuery()
 {
   //
-  string relation_name = tokenizer.pop();
+  string expected_name = tokenizer.pop();
 
-  // query ::= relation-name <- expr;
   string t1 = tokenizer.pop();
-  string t2 = tokenizer.pop();
 
   if (t1 != "<-")
   {
 	    throw runtime_error("Invalid Input");
   }
-  expression(relation_name);
+  string dummy_name = expression();
+
+  db.update_view_name(expected_name, dummy_name);
+  db.show(expected_name);
 
 }
 
@@ -199,7 +202,6 @@ void Parser::createTable(){
 		vector<string> attribute_types = typed_attributes_lists.second;
 		vector<string> keys = get_keys();
 		db.create(table_name, attribute_names, attribute_types, keys);
-		db.show(table_name);
 	}
 	else{
 		throw runtime_error("invalid create table function called1\n");
@@ -209,7 +211,6 @@ void Parser::createTable(){
 void Parser::insert_into(){
 	string tok0 = tokenizer.pop();
 	string tok1 = tokenizer.pop();
-	cout << tok1 << endl;
 	if(tok1 != "INTO"){
 		throw runtime_error("wrong function call for INSERT INTO\n");
 	}
@@ -239,9 +240,7 @@ void Parser::insert_into(){
 				data.push_back(tok);
 			}
 		}
-		cout << data.size();
 		t.put_row(data);
-		db.show(table_name);
 	}
 }
 
@@ -340,24 +339,38 @@ vector<string> Parser::get_keys(){
 
 string Parser::expression(){
 	string tok = tokenizer.pop();
+	cout << tok << endl;
 	string view_name;
 	ExpressionType ex = getExpressionType(tok);
 	if(ex == SELECT){
 	}
 	else if(ex == PROJECT){
+		view_name = projection();
 	}
 	else if(ex == RENAME){
+		view_name = rename();
 	}
+	 
 	else{
 		view_name = atomic_expression();
-		ExpressionType ex1 = getExpressionType(tok);
+					cout << view_name << endl;
+		string tok1 = tokenizer.peek();
+		ExpressionType ex1 = getExpressionType(tok1);
 		if(ex1 == UNION){
+			tokenizer.pop();
+			view_name = set_union_parser(view_name);
 		}
 		else if(ex1 == DIFFERENCE){
+			tokenizer.pop();
+			view_name = set_difference_parser(view_name);
 		}
 		else if(ex1 == PRODUCT){
+			tokenizer.pop();
+			view_name = cross_product_parser(view_name);
 		}
 		else if(ex1 == NATURAL_JOIN){
+			tokenizer.pop();
+			view_name = set_natural_join(view_name);
 		}
 	}
 	return view_name;
@@ -365,22 +378,29 @@ string Parser::expression(){
 
 string Parser::atomic_expression(){
 	string view_name;
-	string tok = tokenizer.pop();
+	string tok = tokenizer.peek();
 	if(tok == "("){
+		string tok2 = tokenizer.pop();
 		view_name = expression();
 		string tok1 = tokenizer.pop();
 		if(tok1 != ")"){
 			throw runtime_error("atomic expression: unexpected symbol");
-
 		}
 	}
 	else{
-		view_name = tok;
+		if(isalpha(tok[0]) ||isdigit(tok[0]) || tok[0] == '_'){
+			string tok2 = tokenizer.pop();
+			view_name = tok2;
+		}
+		else 
+		{
+			view_name = tokenizer.get_previous_data();
+		}
 	}
 	return view_name;
 }
 
-string Parser::selection(){
+/*string Parser::selection(){
 	string view_name = get_dummy_view_name();// = relation_name;
 	int brack = 0;
 	vector<string> condition_data;
@@ -398,38 +418,83 @@ string Parser::selection(){
 	}
 	string table_name = atomic_expression();
 
-}
+}*/
 
-
-template <class T> bool Parser::compare(T left_arg, T right_arg, Operation op) {
-	bool ret_val;
-	
-	switch(op) {
-		case EQUAL:
-			ret_val = left_arg == right_arg;
-			break;
-		case NOT_EQUAL:
-			ret_val = left_arg != right_arg;
-			break;
-		case LESS:
-			ret_val = left_arg < right_arg;
-			break;
-		case GREATER:
-			ret_val = left_arg > right_arg;
-			break;
-		case GEQ:
-			ret_val = left_arg >= right_arg;
-			break;
-		case LEQ:
-			ret_val = left_arg <= right_arg;
-			break;
-		default:
-			throw runtime_error("compare: unexpected error");
-			break;
+string Parser::projection(){
+	string view_name = get_dummy_view_name();
+	vector<string> attributes;
+	string tok = tokenizer.pop();
+	if(tok != "("){
+		throw runtime_error("projection: expected '('");
 	}
-	
-	return ret_val;
+	attributes = get_attribute_list(); 
+	string relation_name = atomic_expression();
+	db.project(view_name, relation_name, attributes);
+	return view_name;
 }
+
+string Parser::rename(){
+	string view_name = get_dummy_view_name();
+	vector<string> attributes;
+	string tok = tokenizer.pop();
+	if(tok != "("){
+		throw runtime_error("projection: expected '('");
+	}
+	attributes = get_attribute_list();
+	string relation_name = atomic_expression();
+	db.rename(view_name, relation_name, attributes);
+	return view_name;
+}
+
+string Parser::set_union_parser(string left_atom_exp){
+	string view_name = get_dummy_view_name();
+	string right_atom_exp = atomic_expression();
+	db.set_union(view_name, left_atom_exp, right_atom_exp);
+	return view_name;
+}
+
+string Parser::set_difference_parser(string left_atom_expr){
+	string view_name = get_dummy_view_name();
+	string right_atom_exp = atomic_expression();
+	db.set_difference(view_name, left_atom_expr, right_atom_exp);
+	return view_name;
+}
+
+string Parser::cross_product_parser(string left_atom_expr){
+	string view_name = get_dummy_view_name();
+	string right_atom_exp = atomic_expression();
+	db.cross_product(view_name, left_atom_expr, right_atom_exp);
+	return view_name;
+}
+
+string Parser::set_natural_join(string left_atom_expr){
+	string view_name = get_dummy_view_name();
+	string right_atom_exp = atomic_expression();
+	db.join(view_name, left_atom_expr, right_atom_exp);
+	return view_name;
+}
+
+  vector<string> Parser::get_attribute_list(){
+	  vector<string> attr_list;
+	 
+	  bool is_brack = false;
+	  while(!is_brack){
+		   string tok1 = tokenizer.pop();
+		if(tok1 == ")"){
+		 is_brack = true;
+		}
+		else if(tok1 == ","){
+		  continue;
+		 }
+		else{
+		  attr_list.push_back(tok1);
+			}
+	  }
+	  if(attr_list.size() == 0){
+		  throw runtime_error("project: no attributes were given. ");
+	  }
+	  return attr_list;
+  }
 
 string Parser::get_dummy_view_name(){
 	string view_name = to_string(view_num);

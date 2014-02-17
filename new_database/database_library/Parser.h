@@ -26,16 +26,13 @@ enum InputType
   QUERY
 };
 
-enum Operation{
-	EQUAL, NOTEQUAL, LESS, GREATER, LEQ, GEQ
-};
 
 class Parser
 {
 private:
   Database db;
 
-  
+    int view_num;
   Tokenizer tokenizer;
   // 'Bridge' functions for the Tokenizer
   //string pop() {return tokenizer.pop();}
@@ -44,7 +41,7 @@ private:
 
 public:
   Parser();
-  int view_name;
+
 
   void processInput(string _input);
   InputType getInputType(string _input);
@@ -62,14 +59,21 @@ public:
 
   //Query functions
   string selection();
+  string projection();
+  string rename();
+  string set_union_parser(string left_atom_expr);
+  string set_difference_parser(string left_atom_expr);
+  string cross_product_parser(string left_atom_expr);
+  string set_natural_join(string left_atom_expr);
 
   //helper functions
   pair<vector<string>, vector<string>> get_typed_attribute_list();
   vector<string> get_keys();
   string get_attribute_type();
   string expression();
-  template <class T> bool compare(T left_arg, T right_arg, Operation op);
   string atomic_expression();
+  string get_dummy_view_name();
+  vector<string> get_attribute_list();
 
 
 };

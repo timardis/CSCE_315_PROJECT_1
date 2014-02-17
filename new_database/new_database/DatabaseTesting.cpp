@@ -227,7 +227,13 @@ int main(){
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
-
+		p.processInput(string("a <- project (name, kind) animals;"));
+		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.processInput(string("dogs <- animals + anim"));
+		//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
+		p.processInput(string("dog_new <- animals - anim"));
+		p.processInput(string("dog_1 <- animals * a"));
         cin >> i; 
       
 }
