@@ -43,7 +43,6 @@ void Parser::processInput(string _input)
 
 void Parser::processQuery()
 {
-  //
   string expected_name = tokenizer.pop();
 
   string t1 = tokenizer.pop();
@@ -107,6 +106,30 @@ void Parser::exit(){
 
 void Parser::show(string table_name){
 	db.show(table_name);
+  string relation_name = tokenizer.pop();
+
+  // query ::= relation-name <- expr;
+  string t1 = tokenizer.pop();
+  string t2 = tokenizer.pop();
+
+  if (t1 == "<")
+  {
+
+  }
+  else
+  {
+    throw runtime_error("Invalid Input");
+  }
+
+  //Table t = expression(input);
+}
+
+
+Table Parser::expression(string _input)
+{
+  // Dummy code to compile
+  Table* t = NULL;
+  return *t;
 }
 
 InputType Parser::getInputType(string _input)

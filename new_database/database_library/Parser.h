@@ -26,13 +26,13 @@ enum InputType
   QUERY
 };
 
-
 class Parser
 {
 private:
   Database db;
 
     int view_num;
+  
   Tokenizer tokenizer;
   // 'Bridge' functions for the Tokenizer
   //string pop() {return tokenizer.pop();}
@@ -74,6 +74,9 @@ public:
   string atomic_expression();
   string get_dummy_view_name();
   vector<string> get_attribute_list();
+  Table expression(string _input);
+  
+  
 
 
 };

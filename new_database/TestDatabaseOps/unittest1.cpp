@@ -123,7 +123,7 @@ namespace TestDatabaseOps
         /*********************************************************************************************/
 		/*		Select Row 3 of relation 1, attribute 2 should again be '55'						 */
 		/*********************************************************************************************/ 
-		Assert::AreEqual(db.select("view1", title, 2).get_row(0).at(1), (string) "55"); 
+		//Assert::AreEqual(db.select("view1", title, 2).get_row(0).at(1), (string) "55"); 
        
 		attribute.push_back("Attribute 1");
       

@@ -9,22 +9,26 @@
 /*------------------------------------------------------------------------------------*/
 /* QUERY FUNCTIONS */
 /*------------------------------------------------------------------------------------*/
-Table Database::select(string view_name, string in_table_name, int row_index){ 
-    bool VIEW_CHECK = true; 
+Table Database::select(string view_name, string from_table_name, Condition condition){ 
+  
+  int dummy_int = 0;
+  
+  
+  bool VIEW_CHECK = true; 
   
     // check to see if view_name already exists 
     for(unsigned int i=0; i<VIEWING_LIST.size(); i++) 
         if(VIEWING_LIST[i].get_table_name() == view_name){ 
-            VIEW_CHECK = false; 
+            VIEW_CHECK = false;
         } 
     bool IN_VIEW = false; 
     bool IN_RELATION = false; 
     for(unsigned int i=0; i<VIEWING_LIST.size(); i++) 
-        if(VIEWING_LIST[i].get_table_name() == in_table_name){ 
+        if(VIEWING_LIST[i].get_table_name() == from_table_name){ 
             IN_VIEW = true; 
         } 
     for(unsigned int i=0; i<RELATIONAL_LIST.size(); i++) 
-        if(RELATIONAL_LIST[i].get_table_name() == in_table_name){ 
+        if(RELATIONAL_LIST[i].get_table_name() == from_table_name){ 
             IN_RELATION = true; 
         } 
     if(!IN_VIEW) 
@@ -36,7 +40,7 @@ Table Database::select(string view_name, string in_table_name, int row_index){
 	//back to the table already created by view name
     if(IN_RELATION){ 
         if(VIEW_CHECK){ 
-            int RELATION_INDEX = get_relation_index(in_table_name); 
+            int RELATION_INDEX = get_relation_index(from_table_name); 
   
             vector<string> temp_vec; 
             for(unsigned int i=0; i<RELATIONAL_LIST[RELATION_INDEX].get_keys().size(); i++) 
@@ -46,21 +50,21 @@ Table Database::select(string view_name, string in_table_name, int row_index){
                 c[i].erase_whole_data(); 
             } 
             Table t(view_name, c, temp_vec); 
-            t.put_row(RELATIONAL_LIST[RELATION_INDEX].get_row(row_index)); 
+            t.put_row(RELATIONAL_LIST[RELATION_INDEX].get_row(dummy_int)); 
             VIEWING_LIST.push_back(t); 
 			return t;
         } 
         else{ 
             int VIEW_INDEX = get_view_index(view_name); 
-            int RELATION_INDEX = get_relation_index(in_table_name); 
-            VIEWING_LIST[VIEW_INDEX].put_row(RELATIONAL_LIST[RELATION_INDEX].get_row(row_index));
+            int RELATION_INDEX = get_relation_index(from_table_name); 
+            VIEWING_LIST[VIEW_INDEX].put_row(RELATIONAL_LIST[RELATION_INDEX].get_row(dummy_int));
 			return VIEWING_LIST[VIEW_INDEX];
         } 
     } 
 
     else if(IN_VIEW){ 
         if(VIEW_CHECK){ 
-            int VIEW_INDEX = get_view_index(in_table_name); 
+            int VIEW_INDEX = get_view_index(from_table_name); 
             vector<string> temp_vec; 
           
             for(unsigned int i=0; i<VIEWING_LIST[VIEW_INDEX].get_keys().size(); i++) 
@@ -70,22 +74,21 @@ Table Database::select(string view_name, string in_table_name, int row_index){
                 c[i].erase_whole_data(); 
             } 
             Table t(view_name, c, temp_vec); 
-            t.put_row(RELATIONAL_LIST[VIEW_INDEX].get_row(row_index)); 
+            t.put_row(RELATIONAL_LIST[VIEW_INDEX].get_row(dummy_int)); 
             VIEWING_LIST.push_back(t); 
 			return t;
         } 
         else{ 
             int VIEW_INDEX = get_view_index(view_name); 
-            int V_INDEX = get_view_index(in_table_name); 
-            VIEWING_LIST[VIEW_INDEX].put_row(RELATIONAL_LIST[V_INDEX].get_row(row_index)); 
+            int V_INDEX = get_view_index(from_table_name); 
+            VIEWING_LIST[VIEW_INDEX].put_row(RELATIONAL_LIST[V_INDEX].get_row(dummy_int)); 
 			return VIEWING_LIST[VIEW_INDEX];
         } 
     } 
     else
         throw runtime_error("Select: no such table name exists"); 
-
-  
-    } 
+    
+} 
   
 Table Database::project(string view_name, string in_table_name, vector<string> attributes){ 
 	//check if the table exists already in view list

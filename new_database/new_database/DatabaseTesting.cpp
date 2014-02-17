@@ -108,9 +108,9 @@ int main(){
   
           
         cout << "TEST SELECT(): select row 3 and row 5 of relation 1\n"; 
-        db.select("view1", title, 0); 
-        db.select("view1", title, 2); 
-        db.show("view1"); 
+        //db.select("view1", title, 0); 
+        //db.select("view1", title, 2); 
+        //db.show("view1"); 
         cout << "\n\n"; 
       
         cout << "TEST PROJECT(): project the Attribute 2 column\n"; 
@@ -145,7 +145,7 @@ int main(){
         cout<<"\n\n"; 
   
         cout << "TEST INSERT_VIEW(): insert view1 into relation 1\n"; 
-        db.insert_view("Relation 2", "view1"); 
+        //db.insert_view("Relation 2", "view1"); 
         db.show("Relation 2"); 
         cout << "\n\n"; 
   
@@ -222,18 +222,42 @@ int main(){
   
         Parser p;
         p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
-		p.processInput(string("a <- project (name, kind) animals;"));
-		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.processInput(string("dogs <- animals + anim"));
-		//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
-		p.processInput(string("dog_new <- animals - anim"));
-		p.processInput(string("dog_1 <- animals * a"));
+				p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
+				p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
+				p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
+				p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
+				p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
+				p.processInput(string("a <- project (name, kind) animals;"));
+				p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+				p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
+				p.processInput(string("dogs <- animals + anim"));
+				//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
+				p.processInput(string("dog_new <- animals - anim"));
+				p.processInput(string("dog_1 <- animals * a"));
+				
+        p.processInput(string(" CREATE TABLE select <-  (kind == \"dogs\") "));
+
+        
+        Tokenizer tok;
+        tok.tokenizeInput("(age < 10)");
+			  Condition c(tok);
+
+			  vector<Type> typeVec;
+			  typeVec.push_back(INTEGER);
+			  typeVec.push_back(VARCHAR);
+
+			  vector<string> attrVec;
+			  attrVec.push_back("age");
+			  attrVec.push_back("name");
+
+			  vector<string> valVec;
+			  valVec.push_back("9");
+			  valVec.push_back("Bob");
+
+			  Tuple tup(typeVec, attrVec, valVec);
+
+			  bool test = c.evaluate_tuple(tup);
+        
         cin >> i; 
       
 }

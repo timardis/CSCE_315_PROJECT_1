@@ -3,7 +3,8 @@
 
 #include <string> 
 #include <vector> 
-#include "Table.h" 
+#include "Table.h"
+#include "Condition.h"
    
 using namespace std; 
    
@@ -18,7 +19,7 @@ private:
    
 public: 
     // Query Functions 
-    Table select(string view_name, string in_table_name, int row_index); 
+    Table select(string view_name, string in_table_name, Condition condition); 
     Table project(string view_name, string in_table_name, vector<string> attributes); 
     Table rename(string view_name, string in_table_name, vector<string> attributes); 
     Table set_union(string view_name, string table_1_name, string table_2_name); 
@@ -26,7 +27,6 @@ public:
     Table cross_product(string view_name, string table_1_name, string table_2_name); 
     Table join(string view_name, string table_1_name, string table_2_name); 
   
-       
     // Command Functions 
     //void exit(); 
     void show(string table_name); 
@@ -36,7 +36,7 @@ public:
     void insert_view(string relation_name, string view_name); 
     void remove(string table_name, int row_index);   
     void remove_table(string table_name); 
-	void rename_column(string table_name, string column_old_name, string column_new_name);
+	  void rename_column(string table_name, string column_old_name, string column_new_name);
    
     // Utility Functions 
     int get_relation_index(string table_name); 
@@ -45,7 +45,8 @@ public:
     void update_view_name(string new_name, string old_name); 
     void update_table_name(string new_name, string old_name); 
     Table& get_table(string table_name); 
-	void exit();
+		
+		void exit();
 };
 
 #endif

@@ -9,6 +9,8 @@ Tokenizer::Tokenizer()
 void Tokenizer::tokenizeInput(string input)
 {
 	tokens.clear();
+  reinitialize();
+
   stringstream line_stream(input);
 	string _input;
 	while (line_stream >> _input){
@@ -114,11 +116,15 @@ void Tokenizer::tokenizeInput(string input)
 		}
 
 	}
+	for (int i = 0; i < tokens.size(); i++){
+		cout << tokens[i] << endl;
+	}
 }
 
 void Tokenizer::reinitialize()
 {
-
+  tokens.clear();
+  currentIndex = -1;
 }
 
 string Tokenizer::peek()
