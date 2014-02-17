@@ -54,8 +54,8 @@ void Parser::processQuery()
   }
   string dummy_name = expression();
 
-  db.update_view_name(expected_name, dummy_name);
-  db.show(expected_name);
+  //db.update_view_name(expected_name, dummy_name);
+  //db.show(expected_name);
 
 }
 
@@ -343,6 +343,7 @@ string Parser::expression(){
 	string view_name;
 	ExpressionType ex = getExpressionType(tok);
 	if(ex == SELECT){
+		view_name = selection();
 	}
 	else if(ex == PROJECT){
 		view_name = projection();
@@ -353,8 +354,10 @@ string Parser::expression(){
 	 
 	else{
 		view_name = atomic_expression();
-					cout << view_name << endl;
+		cout << view_name << endl;
+		
 		string tok1 = tokenizer.peek();
+		
 		ExpressionType ex1 = getExpressionType(tok1);
 		if(ex1 == UNION){
 			tokenizer.pop();
@@ -370,6 +373,7 @@ string Parser::expression(){
 		}
 		else if(ex1 == NATURAL_JOIN){
 			tokenizer.pop();
+			cout << view_name << endl;
 			view_name = set_natural_join(view_name);
 		}
 	}
@@ -388,11 +392,14 @@ string Parser::atomic_expression(){
 		}
 	}
 	else{
-		if(isalpha(tok[0]) ||isdigit(tok[0]) || tok[0] == '_'){
+		if(tok == "JOIN"){
+			view_name = tokenizer.get_previous_data();
+		}
+		else if(isalpha(tok[0]) ||isdigit(tok[0]) || tok[0] == '_' ){
 			string tok2 = tokenizer.pop();
 			view_name = tok2;
 		}
-		else 
+		else
 		{
 			view_name = tokenizer.get_previous_data();
 		}
@@ -400,25 +407,16 @@ string Parser::atomic_expression(){
 	return view_name;
 }
 
-/*string Parser::selection(){
+string Parser::selection(){
 	string view_name = get_dummy_view_name();// = relation_name;
-	int brack = 0;
-	vector<string> condition_data;
-	while(brack!= 2){
-		string tok = tokenizer.pop();
-		if(tok == "(" || tok == ")"){
-			brack++;
-		}
-		else if(tok == "\""){
-			continue;
-		}
-		else{
-			condition_data.push_back(tok);
-		}
-	}
+	Condition c(tokenizer);
 	string table_name = atomic_expression();
+	cout << table_name << endl;
+	db.select(view_name, table_name, c);
+	db.show(view_name);
+	return view_name;
 
-}*/
+}
 
 string Parser::projection(){
 	string view_name = get_dummy_view_name();

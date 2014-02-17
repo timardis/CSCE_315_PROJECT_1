@@ -108,9 +108,9 @@ int main(){
   
           
         cout << "TEST SELECT(): select row 3 and row 5 of relation 1\n"; 
-        db.select("view1", title, 0); 
-        db.select("view1", title, 2); 
-        db.show("view1"); 
+//        db.select("view1", title, 0); 
+  //      db.select("view1", title, 2); 
+    //    db.show("view1"); 
         cout << "\n\n"; 
       
         cout << "TEST PROJECT(): project the Attribute 2 column\n"; 
@@ -132,7 +132,7 @@ int main(){
         db.set_union("view4", title, "Relation 2"); 
         db.show("view4"); 
         cout << "\n\n"; 
-        int i; 
+//        int i; 
   
         cout << "TEST SET_DIFFERENCE(): relation 1 - relation 2 \n"; 
         db.set_difference("view5", title, "Relation 2"); 
@@ -145,8 +145,8 @@ int main(){
         cout<<"\n\n"; 
   
         cout << "TEST INSERT_VIEW(): insert view1 into relation 1\n"; 
-        db.insert_view("Relation 2", "view1"); 
-        db.show("Relation 2"); 
+       // db.insert_view("Relation 2", "view1"); 
+        //db.show("Relation 2"); 
         cout << "\n\n"; 
   
         db.remove_table("Relation 1"); 
@@ -227,13 +227,16 @@ int main(){
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
-		p.processInput(string("a <- project (name, kind) animals;"));
+		p.processInput(string("a <- project (name) animals;"));
 		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
 		p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
 		p.processInput(string("dogs <- animals + anim"));
 		//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
 		p.processInput(string("dog_new <- animals - anim"));
 		p.processInput(string("dog_1 <- animals * a"));
-        cin >> i; 
+
+		p.processInput(string("dog_2 <- animals JOIN a"));
+		p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
+//        cin >> i; 
       
 }

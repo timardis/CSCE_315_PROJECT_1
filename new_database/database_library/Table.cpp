@@ -60,3 +60,34 @@ void Table::put_row(vector<string>& data){
         table_columns[i].add_column_data(data[i]); 
     } 
 }
+
+Tuple Table::get_tuple(int index)
+{
+  vector<string> values;
+  vector<string> attr_names;
+  vector<Type>   types;
+  for(int i = 0; i < get_table_columns().size(); i++)
+  {
+    Column& col = get_table_columns()[i];
+    values.push_back(col.get_column_data()[index]);
+    
+    // Determine type of each column
+    string column_type = col.get_column_type();
+    if(regex_search(column_type, regex("^[[:blank:]]*INTEGER")))
+    {
+      types.push_back(INTEGER);
+    }
+    else if(regex_search(column_type, regex("^[[:blank:]]*VARCHAR")))
+    {
+      types.push_back(VARCHAR);
+    }
+    else
+    {
+      throw runtime_error("Invalid attribute type");
+    }
+
+    attr_names.push_back(col.get_column_name());
+  }
+
+  return Tuple(types, attr_names, values);
+}

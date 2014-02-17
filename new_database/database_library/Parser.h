@@ -2,7 +2,7 @@
 #define PARSER_H
 
 #include "Database.h"
-#include "Tokenizer.h"
+//#include "Tokenizer.h"
 #include <iostream>
 #include <string>
 #include <regex>
