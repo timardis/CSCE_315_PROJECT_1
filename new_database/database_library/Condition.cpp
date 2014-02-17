@@ -5,12 +5,12 @@ Comparison::Comparison(Tokenizer& tokenizer)
   is_condition = false;
   if(tokenizer.peek() == "(")
   {
-    main_condition = Condition(tokenizer);
+    main_condition = new Condition(tokenizer);
     is_condition = true;
   }
   else
   {
-    lhs = tokenizer.pop();
+    attr_name = tokenizer.pop();
     string op_tok = tokenizer.pop();
     if(op_tok == ">")
       op = GREATER;
@@ -32,7 +32,92 @@ Comparison::Comparison(Tokenizer& tokenizer)
 
 bool Comparison::evaluate_tuple(Tuple& tup)
 {
+  if(is_condition)
+  {
+    return main_condition->evaluate_tuple(tup);
+  }
 
+  // evaluate the comparison
+  else
+  {
+    for(int i = 0; i < tup.getSize(); i++)
+    {
+      
+      // check for the attribute to be evaluated
+      if(tup.get_attr_names()[i] == attr_name)
+      {
+        Type t = tup.get_types()[i];
+        string lhs = tup.get_values()[i];
+        if(t == INTEGER)
+        {
+          // convert strings to ints
+          int lhs_int = stoi(lhs);
+          int rhs_int = stoi(rhs);
+
+          switch(t)
+          {
+          case GREATER:
+            return lhs_int > rhs_int;
+            break;
+          case GREATER_EQUAL:
+            return lhs_int >= rhs_int;
+            break;
+          case EQUAL:
+            return lhs_int == rhs_int;
+            break;
+          case NOT_EQUAL:
+            return lhs_int != rhs_int;
+            break;
+          case LESS:
+            return lhs_int < rhs_int;
+            break;
+          case LESS_EQUAL:
+            return lhs_int <= rhs_int;
+            break;
+          default:
+            throw runtime_error("Unknown Comparison Operator Input");
+            break;
+          }
+        }
+        else if(t == VARCHAR)
+        {
+          switch(t)
+          {
+          case GREATER:
+            return lhs > rhs;
+            break;
+          case GREATER_EQUAL:
+            return lhs >= rhs;
+            break;
+          case EQUAL:
+            return lhs == rhs;
+            break;
+          case NOT_EQUAL:
+            return lhs != rhs;
+            break;
+          case LESS:
+            return lhs < rhs;
+            break;
+          case LESS_EQUAL:
+            return lhs <= rhs;
+            break;
+          default:
+            throw runtime_error("Unknown Comparison Operator Input");
+            break;
+          }
+        }
+        else
+          throw runtime_error("Unknown Attribute Type");
+        break;
+      }
+    }
+  }
+}
+
+Comparison::~Comparison()
+{
+  if(is_condition)
+    delete main_condition;
 }
 
 Conjunction::Conjunction(Tokenizer& tokenizer)
@@ -50,7 +135,18 @@ Conjunction::Conjunction(Tokenizer& tokenizer)
 
 bool Conjunction::evaluate_tuple(Tuple& tup)
 {
-
+  if(!has_optional_comparison)
+  {
+    // has only one comparison
+    return main_comparison.evaluate_tuple(tup);
+  }
+  else
+  {
+    // has two comparisons
+    bool main_comp = main_comparison.evaluate_tuple(tup);
+    bool optional_comp = optional_comparison.evaluate_tuple(tup);
+    return main_comp && optional_comp;
+  }
 }
 
 Condition::Condition(Tokenizer& tokenizer)
@@ -78,5 +174,16 @@ Condition::Condition(Tokenizer& tokenizer)
 
 bool Condition::evaluate_tuple(Tuple& tup)
 {
-
+  if(!has_optional_conjunction)
+  {
+    // there was only one conjunction
+    return main_conjunction.evaluate_tuple(tup);
+  }
+  else
+  {
+    // there are to conjunctions
+    bool main_conj = main_conjunction.evaluate_tuple(tup);
+    bool optional_conj = optional_conjunction.evaluate_tuple(tup);
+    return main_conj || optional_conj;
+  }
 }

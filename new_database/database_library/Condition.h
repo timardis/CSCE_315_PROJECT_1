@@ -16,14 +16,14 @@ class Condition;
 class Comparison
 {
   bool is_condition;
-  Condition main_condition;
-  string lhs;         // name of attribute to be compared
-  Comp_Operator op;   
-  string rhs;  
+  Condition* main_condition;
+  string attr_name;         // name of attribute to be compared
+  Comp_Operator op;
+  string rhs;
 public:
   Comparison() {};
   Comparison(Tokenizer& tokenizer);       // value to be compared against
-
+  ~Comparison();
   bool evaluate_tuple(Tuple& tup);
 };
 
@@ -50,6 +50,5 @@ public:
 
   bool evaluate_tuple(Tuple& tup);
 };
-
 
 #endif
