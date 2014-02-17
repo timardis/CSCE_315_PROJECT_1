@@ -1,0 +1,15 @@
+*.obj
+*.tlog
+*.lastbuildstate
+*.log
+*.tlog
+*.tlog
+*.cache
+*.pdb
+*.lib
+*.exe
+*.ilk
+*.exe
+*.lib
+*.tlog
+*.obj
