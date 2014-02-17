@@ -12,8 +12,10 @@ namespace TestDatabaseOps
 
 		TEST_METHOD(BothConditionsTrueShouldReturnTrue)
 		{
+      
 			Tokenizer tok;
-			tok.tokenizeInput("( age < 10 ) && ( name == \"Bob\" )");
+			//tok.tokenizeInput("(( age < 10 ) &&  ( name == \"Bob\" ))");
+      tok.tokenizeInput("(( age < 10 ) &&  ( name == \"Bob\" ))");
 
 			Condition c(tok);
 
@@ -30,11 +32,9 @@ namespace TestDatabaseOps
 			valVec.push_back("Bob");
 
 			Tuple tup(typeVec, attrVec, valVec);
-
+      
 			bool test = c.evaluate_tuple(tup);
-
 			Assert::AreEqual(test, true);
 		}
-
 	};
 }
