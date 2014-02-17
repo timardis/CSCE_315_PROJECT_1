@@ -54,8 +54,8 @@ void Parser::processQuery()
   }
   string dummy_name = expression();
 
-  //db.update_view_name(expected_name, dummy_name);
-  //db.show(expected_name);
+  db.update_view_name(expected_name, dummy_name);
+  db.show(expected_name);
 
 }
 
@@ -68,13 +68,29 @@ void Parser::processCommand(InputType type)
 	case INSERT:
 		insert_into();
 		break;
+	case OPEN:
+		open();
+		break;
+	case CLOSE:
+		close();
+		break;
+	case WRITE:
+		write();
+		break;
+	case SHOW:
+		show();
+		break;
+	case EXIT:
+		exit();
+		break;
 	default:
 		break;
 	}
 
 }
 
-void Parser::open(string relation_name){
+void Parser::open(){
+	string relation_name = tokenizer.pop();
 	string file_name = relation_name + ".db";
 	ifstream my_file;
 	my_file.open(file_name);
@@ -90,7 +106,8 @@ void Parser::open(string relation_name){
 	}
 }
 
-void Parser::close(string relation_name){
+void Parser::close(){
+	string relation_name = tokenizer.pop();
 	string file_name = relation_name + ".db";
 	ifstream my_file(file_name);
 	if (my_file.is_open()){
@@ -105,7 +122,60 @@ void Parser::exit(){
 	db.exit();
 }
 
-void Parser::show(string table_name){
+void Parser::write(){
+	string table_name = tokenizer.pop();
+	Table t = db.get_table(table_name);
+	ofstream output_file;
+	output_file.open(table_name + ".db");
+	output_file << "CREATE TABLE " << table_name << " (";
+
+	for(int i = 0; i < t.get_table_columns().size(); i++){
+		if(i != t.get_table_columns().size()-1){
+			output_file << t.get_table_columns()[i].get_column_name() << " "
+				<< t.get_table_columns()[i].get_column_type() << ", ";
+		}
+		else{
+			output_file << t.get_table_columns()[i].get_column_name() << " "
+				<< t.get_table_columns()[i].get_column_type() << ") ";
+		}
+	}
+	output_file << "PRIMARY KEY (";
+	for(int i = 0; i < t.get_keys().size(); i++){
+		if(i != t.get_keys().size()-1){
+			output_file <<  t.get_keys()[i] << ", ";
+		}
+		else{
+			output_file <<  t.get_keys()[i] << ");" << endl;
+		}
+	}
+
+	for(int i = 0; i < t.get_size_of_col_data(); i++){
+		output_file << "INSERT INTO " << table_name << " VALUES FROM (";
+		vector<string> tuple_row = t.get_row(i);
+		for(int j = 0; j < tuple_row.size(); j++){
+			if(j != tuple_row.size()-1){
+				if(t.get_table_columns()[j].get_column_type() == "INTEGER"){
+					output_file << tuple_row[j] << ", ";
+				}
+				else{
+					output_file << "\"" <<  tuple_row[j] << "\", ";
+				}
+			}
+			else{
+				if(t.get_table_columns()[j].get_column_type() == "INTEGER"){
+					output_file << tuple_row[j] << ");" << endl;
+				}
+				else{
+					output_file << "\"" <<  tuple_row[j] << "\";" << endl;
+				}
+			}
+		}
+	}
+
+}
+
+void Parser::show(){
+	string table_name = atomic_expression();
 	db.show(table_name);
 }
 

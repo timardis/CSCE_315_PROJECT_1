@@ -236,7 +236,8 @@ int main(){
 		p.processInput(string("dog_1 <- animals * a"));
 
 		p.processInput(string("dog_2 <- animals JOIN a"));
-		p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
-//        cin >> i; 
+		//p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
+		int i;
+       cin >> i; 
       
 }

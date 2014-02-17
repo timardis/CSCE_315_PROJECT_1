@@ -48,10 +48,11 @@ public:
   ExpressionType getExpressionType(string _input);
   void processQuery();
   void processCommand(InputType t);
-  void open(string relation_name);
-  void close(string relation_name);
+  void open();
+  void close();
   void exit();
-  void show(string table_name);
+  void show();
+  void write();
   
   // Command functions
   void createTable();
