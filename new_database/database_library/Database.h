@@ -39,6 +39,7 @@ public:
     void remove_table(string table_name); 
 	void rename_column(string table_name, string column_old_name, string column_new_name);
 	void remove_view_table(string table_name);
+  void remove_relation_table(string table_name);
    
     // Utility Functions 
     int get_relation_index(string table_name); 

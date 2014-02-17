@@ -24,6 +24,8 @@ public:
         //keys = NULL; 
           
     } 
+
+    Table() {};
   
     Tuple                   get_tuple(int index);
 

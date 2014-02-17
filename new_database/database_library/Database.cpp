@@ -12,41 +12,84 @@
 Table Database::select(string view_name, string in_table_name, Condition c){ 
 	cout << "hello";
     //check to see if view_name exists
-	int view_index = get_view_index(view_name);
-	if(view_index != -1){
+  bool target_table_is_in_relation_list = false;
+
+	int target_index = get_view_index(view_name);
+	if(target_index >= 0){
 		remove_view_table(view_name);
 	}
-	//check to see if relational table exists
-	int relation_index = get_relation_index(in_table_name);
-	if(relation_index == -1){
-		throw runtime_error("wrong select function call");
-	}
+  else if(target_index == -1)
+  {
+    int target_index = get_relation_index(view_name);
+	  if(target_index >= 0){
+		  remove_relation_table(view_name);
+      target_table_is_in_relation_list = true;
+	  }
+  }
+  else
+    throw runtime_error("Invalid get_view_index() return value");
 
-	cout << "hello";
-	Table rel = RELATIONAL_LIST[relation_index];
-	vector<int> row_number;
-	for(int i = 0; i < rel.get_size_of_col_data(); i++){
-		Tuple& row_tup = rel.get_tuple(i);
-		bool b = c.evaluate_tuple(row_tup);
-		if(b){
-			row_number.push_back(i);
-		}
+	//check to see if the other table to select from exists
+  bool from_viewing_list;
+  bool from_relation_list;
+
+	int list_index = get_relation_index(in_table_name);
+  if(list_index == -1){
+    from_relation_list = false;
+    list_index = get_view_index(in_table_name);
+		if(list_index == -1)
+    {
+      from_viewing_list = false;
+      throw runtime_error("Table to select() from doesn't exist");
+    }
+    else
+      from_viewing_list = true;
 	}
-	vector<Column> col = rel.get_table_columns();
-	//clearing the data of columns
-	for(int i = 0; i < col.size() ; i++){
+  else
+  {
+    from_relation_list = true;
+    from_viewing_list = false;
+  }
+
+
+  Table table_copy;
+
+  if(from_relation_list)
+  {
+	  table_copy = RELATIONAL_LIST[list_index];
+  }
+  else if(from_viewing_list)
+  {
+    table_copy = VIEWING_LIST[list_index];
+  }
+
+  vector<Column> col = table_copy.get_table_columns();
+  for(int i = 0; i < col.size() ; i++){
 		col[i].erase_whole_data();
 	}
+
 	Table new_table(view_name, col);
 
-
-	for(int i = 0; i < row_number.size(); i++){
-		vector<string> data = rel.get_row(row_number[i]);
-		new_table.put_row(data);
+  for(int i = 0; i < table_copy.get_size_of_col_data(); i++){
+		Tuple row_tup = table_copy.get_tuple(i);
+		bool b = c.evaluate_tuple(row_tup);
+		if(b){
+      //tuple satisfies the condition
+      vector<string> selected_row = table_copy.get_row(i);
+      new_table.put_row(selected_row);
+		}
 	}
-	VIEWING_LIST.push_back(new_table);
+
+  if(target_table_is_in_relation_list)
+  {
+    RELATIONAL_LIST.push_back(new_table);
+  }
+  else
+  {
+	  VIEWING_LIST.push_back(new_table);
+  }
 	return new_table;
-    } 
+} 
   
 Table Database::project(string view_name, string in_table_name, vector<string> attributes){ 
 	//check if the table exists already in view list
@@ -743,6 +786,20 @@ void Database::remove_view_table(string table_name){
   
     //erasing the table 
     VIEWING_LIST.erase(VIEWING_LIST.begin()+ table_index); 
+  
+} 
+
+void Database::remove_relation_table(string table_name){ 
+  
+    //finding the table index of table with table_name 
+    int table_index = get_relation_index(table_name);
+  
+    //throwing error if table does not exist 
+    if(table_index == -1) 
+        throw runtime_error("No such table exists."); 
+  
+    //erasing the table 
+    RELATIONAL_LIST.erase(RELATIONAL_LIST.begin()+ table_index); 
   
 } 
 
