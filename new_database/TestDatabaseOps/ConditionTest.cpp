@@ -35,7 +35,7 @@ namespace TestDatabaseOps
 
 		TEST_METHOD(AND_OneConditionTrueShouldReturnFalse) {
 			Tokenizer tok;
-			tok.tokenizeInput("(( age > 10 ) && ( name == \"Bob\" ))");
+			tok.tokenizeInput("(( age > 10 ) && ( name == \"Cuong\" ))");
 
 			Condition c(tok);
 
@@ -59,7 +59,7 @@ namespace TestDatabaseOps
 
 		TEST_METHOD(AND_NoConditionsTrueShouldReturnFalse) {
 			Tokenizer tok;
-			tok.tokenizeInput("(( age > 10 ) && ( name == \"Joe\" ))");
+			tok.tokenizeInput("((age > 10)  &&  (name == \"Joe\") )");
 
 			Condition c(tok);
 

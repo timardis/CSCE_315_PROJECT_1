@@ -163,7 +163,7 @@ bool Conjunction::evaluate_tuple(Tuple& tup)
     // has two comparisons
     bool main_comp = main_comparison->evaluate_tuple(tup);
     bool optional_comp = optional_comparison->evaluate_tuple(tup);
-    return main_comp && optional_comp;
+    return main_comp & optional_comp;
   }
 }
 
@@ -226,7 +226,7 @@ bool Condition::evaluate_tuple(Tuple& tup)
     // there are to conjunctions
     bool main_conj = main_conjunction->evaluate_tuple(tup);
     bool optional_conj = optional_conjunction->evaluate_tuple(tup);
-    return main_conj || optional_conj;
+    return main_conj | optional_conj;
   }
 }
 
