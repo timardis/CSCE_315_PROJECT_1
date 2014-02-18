@@ -787,6 +787,7 @@ void Database::delete_from(string relation_name, Condition& c){
     {
       // tuple satisfies condition, delete
       table_ptr->erase_row(i);
+      i--;
     }
   }
 } 

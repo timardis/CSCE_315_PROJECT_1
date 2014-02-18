@@ -17,38 +17,38 @@ int main(){
         vector<string> tuple3; 
         vector<string> tuple4; 
   
-        attributes.push_back("Attribute 1"); 
-        attributes.push_back("Attribute 2"); 
-        attributes.push_back("Attribute 3"); 
-        attributes.push_back("Attribute 4"); 
+        attributes.push_back("attr1"); 
+        attributes.push_back("attr2"); 
+        attributes.push_back("attr3"); 
+        attributes.push_back("attr4"); 
   
-        attribute_types.push_back("CHAR(10)"); 
-        attribute_types.push_back("INT"); 
-        attribute_types.push_back("DATE"); 
-        attribute_types.push_back("FLOAT"); 
+        attribute_types.push_back("VARCHAR(10)"); 
+        attribute_types.push_back("INTEGER"); 
+        attribute_types.push_back("INTEGER"); 
+        attribute_types.push_back("INTEGER"); 
   
-        keys.push_back("Attribute 1"); 
-        keys.push_back("Attribute 3"); 
+        keys.push_back("attr1"); 
+        keys.push_back("attr3"); 
   
         tuple1.push_back("Allison"); 
         tuple1.push_back("1"); 
-        tuple1.push_back("2013-10-10"); 
-        tuple1.push_back("12.38"); 
+        tuple1.push_back("20131010"); 
+        tuple1.push_back("1238"); 
   
         tuple2.push_back("Bill"); 
         tuple2.push_back("2"); 
-        tuple2.push_back("2010-08-01"); 
-        tuple2.push_back("48.2"); 
+        tuple2.push_back("20100801"); 
+        tuple2.push_back("482"); 
   
         tuple3.push_back("Charlotte"); 
         tuple3.push_back("3"); 
-        tuple3.push_back("2033-08-08"); 
-        tuple3.push_back("65.54"); 
+        tuple3.push_back("20330808"); 
+        tuple3.push_back("6554"); 
   
         tuple4.push_back("Doug"); 
         tuple4.push_back("4"); 
-        tuple4.push_back("2004-06-13"); 
-        tuple4.push_back("89.38"); 
+        tuple4.push_back("2004-0613"); 
+        tuple4.push_back("8938"); 
   
         cout << "TEST CREATE(), INSERT_TUPLE(), SHOW(): create and show a table\n"; 
         db.create(title, attributes, attribute_types, keys); 
@@ -92,11 +92,30 @@ int main(){
         db.show("Relation 2"); 
         cout << "\n\n\n\n"; 
       
-        cout << "TEST REMOVE(): remove row 4 of relation 1\n"; 
-        //db.remove(title, 0); 
+        Tokenizer tok;
+			  tok.tokenize_input("(attr4 < 2000)");
+        
+			  Condition c(tok);
+        db.show(title); 
+
+        cout << "TEST UPDATE(): remove tuples with attr4 < 2000\n"; 
+        vector<string> update_attrs;
+        update_attrs.push_back("attr1");
+        update_attrs.push_back("attr4");
+
+        vector<string> update_attr_values;
+        update_attr_values.push_back("Aggie");
+        update_attr_values.push_back("777");
+
+        db.update(title, update_attrs, update_attr_values, c);
+        db.show(title);
+
+
+        cout << "\n\nTEST REMOVE(): remove tuples with attr4 < 2000\n"; 
+        db.delete_from(title, c); 
         db.show(title); 
         cout << "\n\n"; 
-      
+      /*
         cout << "TEST UPDATE(): change Attribute 2 on row 3 of relation 1 to '55'\n"; 
         vector<string> attribute; 
         attribute.push_back("Attribute 2"); 
@@ -238,6 +257,8 @@ int main(){
 		p.process_input(string("dog_2 <- animals JOIN a"));
 		//p.process_input(string("dogs <- select (kind == \"dog\") animals;"));
 		int i;
+    */
+      int i;
        cin >> i; 
       
 }
