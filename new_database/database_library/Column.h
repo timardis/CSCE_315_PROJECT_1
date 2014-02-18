@@ -18,7 +18,7 @@ public:
     void set_column_name(const string& name); 
     void add_column_data(const string& data); 
     void replace_column_data(const string& data, const int& index); 
-    const vector<string> get_column_data(); 
+    vector<string>& get_column_data(); 
     string get_data_at_index(int row_index); 
     void delete_data(const int& index);  
     void erase_whole_data(); 

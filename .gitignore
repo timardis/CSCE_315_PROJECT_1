@@ -21,3 +21,5 @@
 *.ldf
 *.ipch
 *.opensdf
+*.idb
+*.idb

@@ -93,7 +93,7 @@ int main(){
         cout << "\n\n\n\n"; 
       
         cout << "TEST REMOVE(): remove row 4 of relation 1\n"; 
-        db.remove(title, 0); 
+        //db.remove(title, 0); 
         db.show(title); 
         cout << "\n\n"; 
       
@@ -221,22 +221,22 @@ int main(){
         db.show("join"); 
   
         Parser p;
-        p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
-		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
-		p.processInput(string("a <- project (name) animals;"));
-		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.processInput(string("dogs <- animals + anim"));
-		//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
-		p.processInput(string("dog_new <- animals - anim"));
-		p.processInput(string("dog_1 <- animals * a"));
+        p.process_input(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.process_input(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.process_input(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
+		p.process_input(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
+		p.process_input(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
+		p.process_input(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
+		p.process_input(string("a <- project (name) animals;"));
+		p.process_input(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.process_input(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.process_input(string("dogs <- animals + anim"));
+		//p.process_input(string("a <- rename (aname, akind) (project (name, kind) animals);"));
+		p.process_input(string("dog_new <- animals - anim"));
+		p.process_input(string("dog_1 <- animals * a"));
 
-		p.processInput(string("dog_2 <- animals JOIN a"));
-		//p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
+		p.process_input(string("dog_2 <- animals JOIN a"));
+		//p.process_input(string("dogs <- select (kind == \"dog\") animals;"));
 		int i;
        cin >> i; 
       

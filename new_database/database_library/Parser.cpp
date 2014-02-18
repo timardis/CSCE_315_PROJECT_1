@@ -188,7 +188,7 @@ void Parser::delete_from(){
 	if(tok3 != "WHERE");
 	throw runtime_error("Wrong function call for delete");
 	Condition con(tokenizer);
-	db.remove(relation_name, con);
+	//db.remove(relation_name, con);
 }
 
 void Parser::show(){
