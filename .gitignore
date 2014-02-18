@@ -13,3 +13,11 @@
 *.lib
 *.tlog
 *.obj
+*.dll
+*.exp
+*.pch
+*.idb
+*.mdf
+*.ldf
+*.ipch
+*.opensdf
