@@ -49,6 +49,15 @@ void Tokenizer::tokenizeInput(string input)
 				insertToken(s_for_token);
 				s_for_token.clear();
 				break;
+			case '>':
+				s_for_token = ">";
+				if (_input[index + 1] == '='){
+					s_for_token += "=";
+					index++;
+				}
+				insertToken(s_for_token);
+				s_for_token.clear();
+				break;
 			case '+':
 				insertToken("+");
 				break;

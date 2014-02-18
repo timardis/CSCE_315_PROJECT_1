@@ -53,6 +53,7 @@ public:
   void exit();
   void show();
   void write();
+  void delete_from();
   
   // Command functions
   void createTable();

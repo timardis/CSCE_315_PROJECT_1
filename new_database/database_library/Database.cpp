@@ -9,7 +9,7 @@
 /*------------------------------------------------------------------------------------*/
 /* QUERY FUNCTIONS */
 /*------------------------------------------------------------------------------------*/
-Table Database::select(string view_name, string in_table_name, Condition c){ 
+Table Database::select(string view_name, string in_table_name, Condition& c){ 
 	cout << "hello";
     //check to see if view_name exists
   bool target_table_is_in_relation_list = false;
@@ -680,17 +680,21 @@ void Database::insert_view(string relation_name, string view_name){
     } 
 } 
   
-void Database::remove(string relation_name, int row_index){ 
+void Database::remove(string relation_name, Condition& c){ 
     int relation_index; 
     if((relation_index = get_relation_index(relation_name)) == -1) 
         throw runtime_error("remove: no such relation"); 
   
     Table& relation_table = RELATIONAL_LIST[relation_index]; 
   
-    if(row_index >= relation_table.get_size_of_col_data()) 
-        throw runtime_error("remove: no such row index exists"); 
-  
-    relation_table.erase_row(row_index); 
+	for(int i = 0; i < relation_table.get_size_of_col_data(); i++){
+		Tuple tup = relation_table.get_tuple(i);
+		bool check = c.evaluate_tuple(tup);
+		if(check){
+			relation_table.erase_row(i);
+		}
+
+	}
 } 
   
 void Database::remove_table(string table_name){ 

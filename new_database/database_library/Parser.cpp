@@ -83,6 +83,9 @@ void Parser::processCommand(InputType type)
 	case EXIT:
 		exit();
 		break;
+	case DELETE:
+		delete_from();
+		break;
 	default:
 		break;
 	}
@@ -90,6 +93,7 @@ void Parser::processCommand(InputType type)
 }
 
 void Parser::open(){
+	string tok = tokenizer.pop();
 	string relation_name = tokenizer.pop();
 	string file_name = relation_name + ".db";
 	ifstream my_file;
@@ -119,10 +123,12 @@ void Parser::close(){
 }
 
 void Parser::exit(){
+	string tok = tokenizer.pop();
 	db.exit();
 }
 
 void Parser::write(){
+	string tok = tokenizer.pop();
 	string table_name = tokenizer.pop();
 	Table t = db.get_table(table_name);
 	ofstream output_file;
@@ -171,10 +177,25 @@ void Parser::write(){
 			}
 		}
 	}
+	output_file.close();
+}
 
+void Parser::delete_from(){
+	string tok1 = tokenizer.pop();
+	string tok2 = tokenizer.pop();
+	string relation_name = tokenizer.pop();
+	string tok3 = tokenizer.pop();
+	if(tok3 != "WHERE");
+	throw runtime_error("Wrong function call for delete");
+	Condition con(tokenizer);
+	db.remove(relation_name, con);
 }
 
 void Parser::show(){
+	string tok = tokenizer.pop();
+	if(tok != "SHOW"){
+		throw runtime_error("wrong function call");
+	}
 	string table_name = atomic_expression();
 	db.show(table_name);
 }
@@ -293,17 +314,33 @@ void Parser::insert_into(){
 	}
 	string tok4 = tokenizer.peek();
 	if(tok4 == "RELATION"){
-		//call function with relation
+		string view_name = expression();
+		Table t = db.get_table(view_name);
+		for(int i = 0; i < t.get_size_of_col_data(); i++){
+			db.insert_tuple(table_name, t.get_row(i));
+		}
 	}
 	else{
 		int brack_count = 0;
 		vector<string> data;
+		string full_data = "";
+		int quotes_count = 0;
 		while(brack_count != 2)	{
 			string tok = tokenizer.pop();
 			if(tok == "(" || tok == ")"){
 				brack_count++;
 			}
-			else if(tok == "\"" || tok == ","){
+			else if(tok == "\""){
+				string new_tok = tokenizer.peek();
+				full_data = tokenizer.pop();
+				while(new_tok != "\""){
+					if(full_data != new_tok)
+						full_data += " " +  new_tok;
+					new_tok = tokenizer.pop();
+				}
+				data.push_back(full_data);
+			}
+			else if( tok == ","){
 				continue;
 			}
 			else{
@@ -409,7 +446,6 @@ vector<string> Parser::get_keys(){
 
 string Parser::expression(){
 	string tok = tokenizer.pop();
-	cout << tok << endl;
 	string view_name;
 	ExpressionType ex = getExpressionType(tok);
 	if(ex == SELECT){
@@ -424,8 +460,6 @@ string Parser::expression(){
 	 
 	else{
 		view_name = atomic_expression();
-		cout << view_name << endl;
-		
 		string tok1 = tokenizer.peek();
 		
 		ExpressionType ex1 = getExpressionType(tok1);
@@ -443,7 +477,6 @@ string Parser::expression(){
 		}
 		else if(ex1 == NATURAL_JOIN){
 			tokenizer.pop();
-			cout << view_name << endl;
 			view_name = set_natural_join(view_name);
 		}
 	}
@@ -481,9 +514,7 @@ string Parser::selection(){
 	string view_name = get_dummy_view_name();// = relation_name;
 	Condition c(tokenizer);
 	string table_name = atomic_expression();
-	cout << table_name << endl;
 	db.select(view_name, table_name, c);
-	db.show(view_name);
 	return view_name;
 
 }

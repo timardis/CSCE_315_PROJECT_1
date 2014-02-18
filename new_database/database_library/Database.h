@@ -19,7 +19,7 @@ private:
    
 public: 
     // Query Functions 
-	Table select(string view_name, string in_table_name, Condition c); 
+	Table select(string view_name, string in_table_name, Condition& c); 
     Table project(string view_name, string in_table_name, vector<string> attributes); 
     Table rename(string view_name, string in_table_name, vector<string> attributes); 
     Table set_union(string view_name, string table_1_name, string table_2_name); 
@@ -35,11 +35,11 @@ public:
     void update(string relation_name, vector<string> attribute, vector<string> data, int row_index); 
     void insert_tuple(string relation_name, vector<string> tuple); 
     void insert_view(string relation_name, string view_name); 
-    void remove(string table_name, int row_index);   
+    void remove(string table_name, Condition& c);   
     void remove_table(string table_name); 
 	void rename_column(string table_name, string column_old_name, string column_new_name);
 	void remove_view_table(string table_name);
-  void remove_relation_table(string table_name);
+	void remove_relation_table(string table_name);
    
     // Utility Functions 
     int get_relation_index(string table_name); 

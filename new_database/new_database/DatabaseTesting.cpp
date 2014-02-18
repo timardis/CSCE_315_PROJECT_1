@@ -6,7 +6,7 @@
 using namespace std; 
   
 int main(){ 
-        Database db; 
+      /*  Database db; 
   
         string title = "Relation 1"; 
         vector<string> keys; 
@@ -218,10 +218,10 @@ int main(){
         db.show(table_name2); 
   
         db.join("join", table_name1, table_name2); 
-        db.show("join"); 
+        db.show("join"); */
   
         Parser p;
-        p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+      /*  p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
 		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
@@ -237,6 +237,22 @@ int main(){
 
 		p.processInput(string("dog_2 <- animals JOIN a"));
 		p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
+		int i;*/
+	/*	 p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
+		p.processInput(string("a <- project (name) animals;"));
+		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO anim VALUES FROM RELATION animals;"));
+		p.processInput(string("SHOW anim;"));*/
+		string line;
+		fstream f;
+		f.open("input.txt");
+		while(getline(f, line))
+			p.processInput(line);
 		int i;
        cin >> i; 
       
