@@ -11,8 +11,8 @@ using namespace std;
 class Database{ 
 private: 
    
-    vector<Table> RELATIONAL_LIST; 
-    vector<Table> VIEWING_LIST; 
+    vector<Table> relational_list; 
+    vector<Table> viewing_list; 
    
     // internal utility functions 
     void print_table(Table& t); 

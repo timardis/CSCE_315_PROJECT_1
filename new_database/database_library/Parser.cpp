@@ -4,17 +4,17 @@ Parser::Parser() {
 	view_num = 0;
 }
 
-void Parser::processInput(string _input)
+void Parser::process_input(string _input)
 {
   try
   {
     // Tokenize the input, divide the string input into minimal units
-    tokenizer.tokenizeInput(_input);
+    tokenizer.tokenize_input(_input);
     
     string token;
 
     // Check if there is any token
-    if(tokenizer.remainingTokens() > 0)
+    if(tokenizer.remaining_tokens() > 0)
     {
       token = tokenizer.peek();
     }
@@ -24,14 +24,14 @@ void Parser::processInput(string _input)
       return;
     }
 
-    InputType type = getInputType(token);
+    InputType type = get_input_type(token);
     switch(type)
     {
     case QUERY:
-      processQuery();
+      process_query();
       break;
     default:
-      processCommand(type);
+      process_command(type);
       break;
     }
   }
@@ -41,7 +41,7 @@ void Parser::processInput(string _input)
   }
 }
 
-void Parser::processQuery()
+void Parser::process_query()
 {
   //
   string expected_name = tokenizer.pop();
@@ -59,11 +59,11 @@ void Parser::processQuery()
 
 }
 
-void Parser::processCommand(InputType type)
+void Parser::process_command(InputType type)
 {
 	switch (type){
 	case CREATE:
-		createTable();
+		create_table();
 		break;
 	case INSERT:
 		insert_into();
@@ -102,7 +102,7 @@ void Parser::open(){
 	if (my_file.is_open()){
 		while (getline(my_file, line))
 		{
-			processInput(line);
+			process_input(line);
 		}
 	}
 	else{
@@ -200,7 +200,7 @@ void Parser::show(){
 	db.show(table_name);
 }
 
-InputType Parser::getInputType(string _input)
+InputType Parser::get_input_type(string _input)
 {
   smatch m;
   if (regex_search(_input, m, regex("^[[:blank:]]*([a-zA-Z1-9]+)[[:blank:]]*")))
@@ -254,7 +254,7 @@ InputType Parser::getInputType(string _input)
   }
 }
 
-ExpressionType Parser::getExpressionType(string _input){
+ExpressionType Parser::get_expression_type(string _input){
 	if(_input == "select"){
 		return SELECT;
 	}
@@ -282,7 +282,7 @@ ExpressionType Parser::getExpressionType(string _input){
 
 }
 
-void Parser::createTable(){
+void Parser::create_table(){
 	string t1 = tokenizer.pop();
 	string t2 = tokenizer.pop();
 	if (t1 == "CREATE" && t2 == "TABLE"){
@@ -447,7 +447,7 @@ vector<string> Parser::get_keys(){
 string Parser::expression(){
 	string tok = tokenizer.pop();
 	string view_name;
-	ExpressionType ex = getExpressionType(tok);
+	ExpressionType ex = get_expression_type(tok);
 	if(ex == SELECT){
 		view_name = selection();
 	}
@@ -462,7 +462,7 @@ string Parser::expression(){
 		view_name = atomic_expression();
 		string tok1 = tokenizer.peek();
 		
-		ExpressionType ex1 = getExpressionType(tok1);
+		ExpressionType ex1 = get_expression_type(tok1);
 		if(ex1 == UNION){
 			tokenizer.pop();
 			view_name = set_union_parser(view_name);

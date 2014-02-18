@@ -32,22 +32,18 @@ class Parser
 private:
   Database db;
 
-    int view_num;
+  int view_num;
   Tokenizer tokenizer;
-  // 'Bridge' functions for the Tokenizer
-  //string pop() {return tokenizer.pop();}
-  //string peek() {return tokenizer.peek();}
-  //void tokenizeInput(string _input) {tokenizer.tokenizeInput(_input);}
 
 public:
   Parser();
 
 
-  void processInput(string _input);
-  InputType getInputType(string _input);
-  ExpressionType getExpressionType(string _input);
-  void processQuery();
-  void processCommand(InputType t);
+  void process_input(string _input);
+  InputType get_input_type(string _input);
+  ExpressionType get_expression_type(string _input);
+  void process_query();
+  void process_command(InputType t);
   void open();
   void close();
   void exit();
@@ -56,7 +52,7 @@ public:
   void delete_from();
   
   // Command functions
-  void createTable();
+  void create_table();
   void insert_into();
 
   //Query functions

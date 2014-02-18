@@ -252,7 +252,7 @@ int main(){
 		fstream f;
 		f.open("input.txt");
 		while(getline(f, line))
-			p.processInput(line);
+			p.process_input(line);
 		int i;
        cin >> i; 
       
