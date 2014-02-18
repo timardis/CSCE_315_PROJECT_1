@@ -13,3 +13,5 @@
 *.lib
 *.tlog
 *.obj
+*.mdf
+*.ldf
