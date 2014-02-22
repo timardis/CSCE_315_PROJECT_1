@@ -1,7 +1,3 @@
-
-#ifndef TOKENIZER_H
-#define TOKENIZER_H
-
 #include <vector>
 #include <string>
 #include <iostream>
@@ -34,7 +30,7 @@ public:
   // return number of remaining tokens
   int remaining_tokens();
 
+  void add_bracket();
+
   string get_previous_data();
 };
-
-#endif

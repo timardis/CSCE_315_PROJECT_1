@@ -50,6 +50,7 @@ public:
   void show();
   void write();
   void delete_from();
+  void update_to();
   
   // Command functions
   void create_table();
@@ -72,6 +73,7 @@ public:
   string atomic_expression();
   string get_dummy_view_name();
   vector<string> get_attribute_list();
+  pair<vector<string>, vector<string>> get_attr_for_update();
 
 
 };

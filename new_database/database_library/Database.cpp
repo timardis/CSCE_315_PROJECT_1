@@ -10,7 +10,6 @@
 /* QUERY FUNCTIONS */
 /*------------------------------------------------------------------------------------*/
 Table Database::select(string view_name, string in_table_name, Condition& c){ 
-	cout << "hello";
     //check to see if view_name exists
   bool target_table_is_in_relation_list = false;
 
@@ -34,6 +33,7 @@ Table Database::select(string view_name, string in_table_name, Condition& c){
   bool from_relation_list;
 
 	int list_index = get_relation_index(in_table_name);
+	
   if(list_index == -1){
     from_relation_list = false;
     list_index = get_view_index(in_table_name);
@@ -504,6 +504,8 @@ void Database::print_table(Table& t){
         } 
         cout << endl; 
     } 
+
+	cout << endl << endl;
   
   
     } 
@@ -568,31 +570,70 @@ void Database::create(string table_name, vector<string> attributes,
     relational_list.push_back(tab); 
 } 
   
-void Database::update(string relation_name, vector<string>attribute, vector<string> data, int row_index){ 
-    int relation_index = -1; 
-    vector<int> attribute_indices; 
-  
-    relation_index = get_relation_index(relation_name); 
-  
-    if(relation_index == -1) 
-        throw runtime_error("update: no such relation"); 
-  
-    // find attribute indices 
-    Table& t = relational_list[relation_index]; 
-    for(unsigned int i = 0; i < attribute.size(); ++i) { 
-        int attribute_index = -1; 
-        attribute_index = get_attribute_index(t, attribute[i]); 
-  
-        if(relation_index == -1) 
-            throw runtime_error("update: no such attribute"); 
-  
-        attribute_indices.push_back(attribute_index); 
-    } 
-  
-    // update attributes 
-    for(unsigned int i = 0; i < attribute_indices.size(); ++i) 
-        t.get_table_columns()[attribute_indices[i]].replace_column_data(data[i], row_index); 
-} 
+void Database::update(string relation_name, vector<string> attr_names, vector<string> values, Condition& c)
+{
+  if(attr_names.size() != values.size())
+    throw runtime_error("Attributes size and values size don't match");
+
+
+  bool from_viewing_list;
+  bool from_relation_list;
+
+  int list_index = get_relation_index(relation_name);
+  if(list_index == -1){
+    from_relation_list = false;
+    list_index = get_view_index(relation_name);
+    if(list_index == -1)
+    {
+      from_viewing_list = false;
+      throw runtime_error("Table to delete from doesn't exist");
+    }
+    else
+      from_viewing_list = true;
+  }
+  else
+  {
+    from_relation_list = true;
+    from_viewing_list = false;
+  }
+
+  Table* table_ptr;
+
+  if(from_relation_list)
+  {
+	  table_ptr = &relational_list[list_index];
+  }
+  else if(from_viewing_list)
+  {
+    table_ptr = &viewing_list[list_index];
+  }
+  else
+    throw runtime_error("Table to delete from doesn't exist");
+
+  for(int i = 0; i < table_ptr->get_size_of_col_data(); i++)
+  {
+    Tuple t = table_ptr->get_tuple(i);
+    if(c.evaluate_tuple(t))
+    {
+      // tuple satisfies condition, update
+      // loop through the attributes passed in
+      for(int j = 0; j < attr_names.size(); j++)
+      {
+        // loop through the table's attributes
+        for(int k = 0; k < table_ptr->get_table_columns().size(); k++)
+        {
+          Column& col = table_ptr->get_table_columns()[k];
+          if(attr_names[j] == col.get_column_name())
+          {
+            // update individual attribute value
+            col.get_column_data()[i] = values[j];
+            break;
+          }
+        }
+      }
+    }
+  }
+}
   
 void Database::insert_tuple(string relation_name, vector<string> tuple){ 
     int table_index; 
@@ -695,6 +736,53 @@ void Database::remove(string relation_name, Condition& c){
 		}
 
 	}
+}
+
+void Database::delete_from(string relation_name, Condition& c){ 
+  bool from_viewing_list;
+  bool from_relation_list;
+
+  int list_index = get_relation_index(relation_name);
+  if(list_index == -1){
+    from_relation_list = false;
+    list_index = get_view_index(relation_name);
+    if(list_index == -1)
+    {
+      from_viewing_list = false;
+      throw runtime_error("Table to delete from doesn't exist");
+    }
+    else
+      from_viewing_list = true;
+  }
+  else
+  {
+    from_relation_list = true;
+    from_viewing_list = false;
+  }
+
+  Table* table_ptr;
+
+  if(from_relation_list)
+  {
+	  table_ptr = &relational_list[list_index];
+  }
+  else if(from_viewing_list)
+  {
+    table_ptr = &viewing_list[list_index];
+  }
+  else
+    throw runtime_error("Table to delete from doesn't exist");
+
+  for(int i = 0; i < table_ptr->get_size_of_col_data(); i++)
+  {
+    Tuple t = table_ptr->get_tuple(i);
+    if(c.evaluate_tuple(t))
+    {
+      // tuple satisfies condition, delete
+      table_ptr->erase_row(i);
+      i--;
+    }
+  }
 } 
   
 void Database::remove_table(string table_name){ 

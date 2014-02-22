@@ -9,8 +9,6 @@ Tokenizer::Tokenizer()
 void Tokenizer::tokenize_input(string input)
 {
 	tokens.clear();
-  reinitialize();
-
   stringstream line_stream(input);
 	string _input;
 	while (line_stream >> _input){
@@ -125,15 +123,11 @@ void Tokenizer::tokenize_input(string input)
 		}
 
 	}
-	for (int i = 0; i < tokens.size(); i++){
-		cout << tokens[i] << endl;
-	}
 }
 
 void Tokenizer::reinitialize()
 {
-  tokens.clear();
-  currentIndex = -1;
+
 }
 
 string Tokenizer::peek()
@@ -172,5 +166,13 @@ void Tokenizer::insert_token(string _token)
 
 string Tokenizer:: get_previous_data(){
 	return tokens[current_index-1];
+}
+
+void Tokenizer:: add_bracket(){
+	int temp_index = current_index;
+	tokens.insert(tokens.begin() + current_index, "(");
+	tokens[tokens.size()-1] = ")";
+	tokens.push_back(";");
+	current_index = temp_index;
 }
 

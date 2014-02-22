@@ -55,7 +55,7 @@ void Parser::process_query()
   string dummy_name = expression();
 
   db.update_view_name(expected_name, dummy_name);
-  db.show(expected_name);
+ // db.show(expected_name);
 
 }
 
@@ -85,6 +85,9 @@ void Parser::process_command(InputType type)
 		break;
 	case DELETE:
 		delete_from();
+		break;
+	case UPDATE:
+		update_to();
 		break;
 	default:
 		break;
@@ -185,10 +188,26 @@ void Parser::delete_from(){
 	string tok2 = tokenizer.pop();
 	string relation_name = tokenizer.pop();
 	string tok3 = tokenizer.pop();
-	if(tok3 != "WHERE");
+	if(tok3 != "WHERE")
 	throw runtime_error("Wrong function call for delete");
+	if(tokenizer.peek() != "("){
+	tokenizer.add_bracket();
+	}
 	Condition con(tokenizer);
-	db.remove(relation_name, con);
+	db.delete_from(relation_name, con);
+}
+
+void Parser::update_to(){
+	string tok1 = tokenizer.pop();
+	string relation_name = tokenizer.pop();
+	string tok2 = tokenizer.pop();
+	pair<vector<string>,vector<string>> attr_list_literal = get_attr_for_update();
+	string tok3 = tokenizer.pop();
+	if(tokenizer.peek() != "("){
+	tokenizer.add_bracket();
+	}
+	Condition c(tokenizer);
+	db.update(relation_name, attr_list_literal.first, attr_list_literal.second,c);
 }
 
 void Parser::show(){
@@ -384,6 +403,43 @@ pair<vector<string>, vector<string>> Parser::get_typed_attribute_list(){
 
 }
 
+ pair<vector<string>, vector<string>> Parser::get_attr_for_update(){
+	 pair<vector<string>, vector<string>> name_and_data;
+
+	 string tok = tokenizer.peek();
+	 while(tok!= "WHERE"){
+	 string attribute_name = tokenizer.pop();
+	 string equal_sign = tokenizer.pop();
+	 string full_data;
+	 if(tok == "\""){
+		string new_tok = tokenizer.peek();
+			full_data = tokenizer.pop();
+			while(new_tok != "\""){
+				if(full_data != new_tok)
+					full_data += " " +  new_tok;
+					//new_tok = tokenizer.pop();
+				}
+				name_and_data.second.push_back(full_data);
+				 tok = tokenizer.peek();
+			}
+	 else if(tok == ","){
+		  tok = tokenizer.peek();
+	 }
+	 else{
+		  string attribute_data = tokenizer.pop();
+		  name_and_data.second.push_back(attribute_data);
+		   tok = tokenizer.peek();
+	 }
+	
+	 name_and_data.first.push_back(attribute_name);
+	
+
+	 }
+	 return name_and_data;
+
+ }
+
+
 string Parser::get_attribute_type(){
 	string tok1 = tokenizer.pop();
 	string tok2 = tokenizer.peek();
@@ -511,7 +567,7 @@ string Parser::atomic_expression(){
 }
 
 string Parser::selection(){
-	string view_name = get_dummy_view_name();// = relation_name;
+	string view_name = get_dummy_view_name();
 	Condition c(tokenizer);
 	string table_name = atomic_expression();
 	db.select(view_name, table_name, c);
