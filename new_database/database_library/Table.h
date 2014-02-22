@@ -27,18 +27,17 @@ public:
 
     Table() {};
   
-    Tuple                   get_tuple(int index);
-
-    void                    set_keys(const vector<string>& k); 
-    void                    set_attributes(const vector<Column>& c); 
-    void                    set_table_name(const string& name); 
-    const string&           get_table_name(); 
-    void                    delete_table_column(Column* c); 
-    void                    add_to_table_column(const Column& c); 
-    int                     get_size_of_col_data(); 
-    vector<Column>&         get_table_columns();   
-    const vector<string>&   get_keys(); 
-    void                    erase_row(int row_index); 
-    vector<string>          get_row(int row_index); 
-    void                    put_row(vector<string>& data); 
+    Tuple get_tuple(int index);
+    void  set_keys(const vector<string>& k); 
+    void  set_attributes(const vector<Column>& c); 
+    void  set_table_name(const string& name); 
+    const string& get_table_name(); 
+    void  delete_table_column(Column* c); 
+    void  add_to_table_column(const Column& c); 
+    int  get_size_of_col_data(); 
+    vector<Column>& get_table_columns();   
+    const vector<string>& get_keys(); 
+    void erase_row(int row_index); 
+    vector<string> get_row(int row_index); 
+    void put_row(vector<string>& data); 
 };
