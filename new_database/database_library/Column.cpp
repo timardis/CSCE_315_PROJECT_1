@@ -16,7 +16,7 @@ void Column::replace_column_data(const string& data, const int& index){
     column_data[index] = data; 
 } 
   
-const vector<string> Column::get_column_data(){ 
+vector<string>& Column::get_column_data(){ 
     return column_data; 
 } 
   

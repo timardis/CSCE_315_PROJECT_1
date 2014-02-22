@@ -3,10 +3,10 @@
 
 Tokenizer::Tokenizer()
 {
-  currentIndex = -1;
+  current_index = -1;
 }
 
-void Tokenizer::tokenizeInput(string input)
+void Tokenizer::tokenize_input(string input)
 {
 	tokens.clear();
   reinitialize();
@@ -28,15 +28,15 @@ void Tokenizer::tokenizeInput(string input)
 				ch = _input[index];	
 			}
 			if (s_for_token != ""){
-				insertToken(s_for_token);
+				insert_token(s_for_token);
 				s_for_token.clear();
 			}
 			switch (_input[index]){
 			case '(':
-				insertToken("(");
+				insert_token("(");
 				break;
 			case ')':
-				insertToken(")");
+				insert_token(")");
 				break;
 			case '<':
 				s_for_token = "<";
@@ -48,23 +48,32 @@ void Tokenizer::tokenizeInput(string input)
 					s_for_token += "-";
 					index++;
 				}
-				insertToken(s_for_token);
+				insert_token(s_for_token);
+				s_for_token.clear();
+				break;
+			case '>':
+				s_for_token = ">";
+				if (_input[index + 1] == '='){
+					s_for_token += "=";
+					index++;
+				}
+				insert_token(s_for_token);
 				s_for_token.clear();
 				break;
 			case '+':
-				insertToken("+");
+				insert_token("+");
 				break;
 			case '-':
-				insertToken("-");
+				insert_token("-");
 				break;
 			case '*':
-				insertToken("*");
+				insert_token("*");
 				break;
 			case ',':
-				insertToken(",");
+				insert_token(",");
 				break;
 			case ';':
-				insertToken(";");
+				insert_token(";");
 				break;
 			case '=':
 				s_for_token = "=";
@@ -72,7 +81,7 @@ void Tokenizer::tokenizeInput(string input)
 					s_for_token += "=";
 					index++;
 				}
-				insertToken(s_for_token);
+				insert_token(s_for_token);
 				s_for_token.clear();
 				break;
 			case '|':
@@ -82,7 +91,7 @@ void Tokenizer::tokenizeInput(string input)
 					index++;
 				}
 				if (s_for_token == "||"){
-					insertToken(s_for_token);
+					insert_token(s_for_token);
 					s_for_token.clear();
 				}
 				else{
@@ -96,7 +105,7 @@ void Tokenizer::tokenizeInput(string input)
 					index++;
 				}
 				if (s_for_token == "&&"){
-					insertToken(s_for_token);
+					insert_token(s_for_token);
 					s_for_token.clear();
 				}
 				else{
@@ -104,7 +113,7 @@ void Tokenizer::tokenizeInput(string input)
 				}
 				break;
 			case '"':
-				insertToken("\"");
+				insert_token("\"");
 				break;
 
 			case '\n': case '\r':
@@ -129,19 +138,19 @@ void Tokenizer::reinitialize()
 
 string Tokenizer::peek()
 {
-  if(remainingTokens() > 0)
+  if(remaining_tokens() > 0)
   {
-    string s = tokens[currentIndex];
+    string s = tokens[current_index];
     return s;
   }
 }
   
 string Tokenizer::pop()
 {
-  if(remainingTokens() > 0)
+  if(remaining_tokens() > 0)
   {
-    string s = tokens[currentIndex];
-    currentIndex++;
+    string s = tokens[current_index];
+    current_index++;
     return s;
   }
   else
@@ -150,18 +159,18 @@ string Tokenizer::pop()
   }
 }
 
-int Tokenizer::remainingTokens()
+int Tokenizer::remaining_tokens()
 {
   return tokens.size();
 }
 
-void Tokenizer::insertToken(string _token)
+void Tokenizer::insert_token(string _token)
 {
   tokens.push_back(_token);
-  currentIndex = 0;
+  current_index = 0;
 }
 
 string Tokenizer:: get_previous_data(){
-	return tokens[currentIndex-1];
+	return tokens[current_index-1];
 }
 

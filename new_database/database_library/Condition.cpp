@@ -125,13 +125,13 @@ bool Comparison::evaluate_tuple(Tuple& tup)
     }
   }
 }
-
+/******************************************************************/
 Comparison::~Comparison()
 {
   if(main_condition != NULL)
   {
-    delete main_condition;
-    main_condition = NULL;
+	  delete main_condition;
+     main_condition = NULL;
   }
 }
 

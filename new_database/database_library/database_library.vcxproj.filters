@@ -50,10 +50,10 @@
     <ClInclude Include="Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tuple.h">
+    <ClInclude Include="Condition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Condition.h">
+    <ClInclude Include="Tuple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

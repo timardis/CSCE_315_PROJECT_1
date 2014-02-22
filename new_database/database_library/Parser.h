@@ -2,7 +2,7 @@
 #define PARSER_H
 
 #include "Database.h"
-#include "Tokenizer.h"
+//#include "Tokenizer.h"
 #include <iostream>
 #include <string>
 #include <regex>
@@ -26,35 +26,33 @@ enum InputType
   QUERY
 };
 
+
 class Parser
 {
 private:
   Database db;
 
-    int view_num;
-  
+  int view_num;
   Tokenizer tokenizer;
-  // 'Bridge' functions for the Tokenizer
-  //string pop() {return tokenizer.pop();}
-  //string peek() {return tokenizer.peek();}
-  //void tokenizeInput(string _input) {tokenizer.tokenizeInput(_input);}
 
 public:
   Parser();
 
 
-  void processInput(string _input);
-  InputType getInputType(string _input);
-  ExpressionType getExpressionType(string _input);
-  void processQuery();
-  void processCommand(InputType t);
-  void open(string relation_name);
-  void close(string relation_name);
+  void process_input(string _input);
+  InputType get_input_type(string _input);
+  ExpressionType get_expression_type(string _input);
+  void process_query();
+  void process_command(InputType t);
+  void open();
+  void close();
   void exit();
-  void show(string table_name);
+  void show();
+  void write();
+  void delete_from();
   
   // Command functions
-  void createTable();
+  void create_table();
   void insert_into();
 
   //Query functions
@@ -74,9 +72,6 @@ public:
   string atomic_expression();
   string get_dummy_view_name();
   vector<string> get_attribute_list();
-  Table expression(string _input);
-  
-  
 
 
 };

@@ -14,13 +14,13 @@ class Tokenizer
 {
 private:
   vector<string> tokens;
-  int currentIndex;
+  int current_index;
 
-  void insertToken(string _token);
+  void insert_token(string _token);
 
 public:
   Tokenizer();
-  void tokenizeInput(string _input);
+  void tokenize_input(string _input);
 
   // clear token vector and reset current index for next input string
   void reinitialize();
@@ -32,7 +32,7 @@ public:
   string pop();
 
   // return number of remaining tokens
-  int remainingTokens();
+  int remaining_tokens();
 
   string get_previous_data();
 };
