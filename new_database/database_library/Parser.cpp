@@ -43,6 +43,7 @@ void Parser::process_input(string _input)
 
 void Parser::process_query()
 {
+  //
   string expected_name = tokenizer.pop();
 
   string t1 = tokenizer.pop();
@@ -187,7 +188,7 @@ void Parser::delete_from(){
 	if(tok3 != "WHERE");
 	throw runtime_error("Wrong function call for delete");
 	Condition con(tokenizer);
-	//db.remove(relation_name, con);
+	db.remove(relation_name, con);
 }
 
 void Parser::show(){
@@ -197,30 +198,6 @@ void Parser::show(){
 	}
 	string table_name = atomic_expression();
 	db.show(table_name);
-  string relation_name = tokenizer.pop();
-
-  // query ::= relation-name <- expr;
-  string t1 = tokenizer.pop();
-  string t2 = tokenizer.pop();
-
-  if (t1 == "<")
-  {
-
-  }
-  else
-  {
-    throw runtime_error("Invalid Input");
-  }
-
-  //Table t = expression(input);
-}
-
-
-Table Parser::expression(string _input)
-{
-  // Dummy code to compile
-  Table* t = NULL;
-  return *t;
 }
 
 InputType Parser::get_input_type(string _input)

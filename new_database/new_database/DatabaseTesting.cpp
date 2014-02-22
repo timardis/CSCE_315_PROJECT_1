@@ -6,7 +6,7 @@
 using namespace std; 
   
 int main(){ 
-        Database db; 
+      /*  Database db; 
   
         string title = "Relation 1"; 
         vector<string> keys; 
@@ -17,38 +17,38 @@ int main(){
         vector<string> tuple3; 
         vector<string> tuple4; 
   
-        attributes.push_back("attr1"); 
-        attributes.push_back("attr2"); 
-        attributes.push_back("attr3"); 
-        attributes.push_back("attr4"); 
+        attributes.push_back("Attribute 1"); 
+        attributes.push_back("Attribute 2"); 
+        attributes.push_back("Attribute 3"); 
+        attributes.push_back("Attribute 4"); 
   
-        attribute_types.push_back("VARCHAR(10)"); 
-        attribute_types.push_back("INTEGER"); 
-        attribute_types.push_back("INTEGER"); 
-        attribute_types.push_back("INTEGER"); 
+        attribute_types.push_back("CHAR(10)"); 
+        attribute_types.push_back("INT"); 
+        attribute_types.push_back("DATE"); 
+        attribute_types.push_back("FLOAT"); 
   
-        keys.push_back("attr1"); 
-        keys.push_back("attr3"); 
+        keys.push_back("Attribute 1"); 
+        keys.push_back("Attribute 3"); 
   
         tuple1.push_back("Allison"); 
         tuple1.push_back("1"); 
-        tuple1.push_back("20131010"); 
-        tuple1.push_back("1238"); 
+        tuple1.push_back("2013-10-10"); 
+        tuple1.push_back("12.38"); 
   
         tuple2.push_back("Bill"); 
         tuple2.push_back("2"); 
-        tuple2.push_back("20100801"); 
-        tuple2.push_back("482"); 
+        tuple2.push_back("2010-08-01"); 
+        tuple2.push_back("48.2"); 
   
         tuple3.push_back("Charlotte"); 
         tuple3.push_back("3"); 
-        tuple3.push_back("20330808"); 
-        tuple3.push_back("6554"); 
+        tuple3.push_back("2033-08-08"); 
+        tuple3.push_back("65.54"); 
   
         tuple4.push_back("Doug"); 
         tuple4.push_back("4"); 
-        tuple4.push_back("2004-0613"); 
-        tuple4.push_back("8938"); 
+        tuple4.push_back("2004-06-13"); 
+        tuple4.push_back("89.38"); 
   
         cout << "TEST CREATE(), INSERT_TUPLE(), SHOW(): create and show a table\n"; 
         db.create(title, attributes, attribute_types, keys); 
@@ -92,30 +92,11 @@ int main(){
         db.show("Relation 2"); 
         cout << "\n\n\n\n"; 
       
-        Tokenizer tok;
-			  tok.tokenize_input("(attr4 < 2000)");
-        
-			  Condition c(tok);
-        db.show(title); 
-
-        cout << "TEST UPDATE(): remove tuples with attr4 < 2000\n"; 
-        vector<string> update_attrs;
-        update_attrs.push_back("attr1");
-        update_attrs.push_back("attr4");
-
-        vector<string> update_attr_values;
-        update_attr_values.push_back("Aggie");
-        update_attr_values.push_back("777");
-
-        db.update(title, update_attrs, update_attr_values, c);
-        db.show(title);
-
-
-        cout << "\n\nTEST REMOVE(): remove tuples with attr4 < 2000\n"; 
-        db.delete_from(title, c); 
+        cout << "TEST REMOVE(): remove row 4 of relation 1\n"; 
+        db.remove(title, 0); 
         db.show(title); 
         cout << "\n\n"; 
-      /*
+      
         cout << "TEST UPDATE(): change Attribute 2 on row 3 of relation 1 to '55'\n"; 
         vector<string> attribute; 
         attribute.push_back("Attribute 2"); 
@@ -237,28 +218,42 @@ int main(){
         db.show(table_name2); 
   
         db.join("join", table_name1, table_name2); 
-        db.show("join"); 
+        db.show("join"); */
   
         Parser p;
-        p.process_input(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.process_input(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.process_input(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
-		p.process_input(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
-		p.process_input(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
-		p.process_input(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
-		p.process_input(string("a <- project (name) animals;"));
-		p.process_input(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
-		p.process_input(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
-		p.process_input(string("dogs <- animals + anim"));
-		//p.process_input(string("a <- rename (aname, akind) (project (name, kind) animals);"));
-		p.process_input(string("dog_new <- animals - anim"));
-		p.process_input(string("dog_1 <- animals * a"));
+      /*  p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
+		p.processInput(string("a <- project (name) animals;"));
+		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO anim VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.processInput(string("dogs <- animals + anim"));
+		//p.processInput(string("a <- rename (aname, akind) (project (name, kind) animals);"));
+		p.processInput(string("dog_new <- animals - anim"));
+		p.processInput(string("dog_1 <- animals * a"));
 
-		p.process_input(string("dog_2 <- animals JOIN a"));
-		//p.process_input(string("dogs <- select (kind == \"dog\") animals;"));
+		p.processInput(string("dog_2 <- animals JOIN a"));
+		p.processInput(string("dogs <- select (kind == \"dog\") animals;"));
+		int i;*/
+	/*	 p.processInput(string("CREATE TABLE animals (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"cat\", 4);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Spot\", \"dog\", 10);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Snoopy\", \"dog\", 3);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Tweety\", \"bird\", 1);"));
+		p.processInput(string("INSERT INTO animals VALUES FROM (\"Joe\", \"bird\", 2);"));
+		p.processInput(string("a <- project (name) animals;"));
+		p.processInput(string("CREATE TABLE anim (name VARCHAR(20), kind VARCHAR(8), years INTEGER) PRIMARY KEY (name, kind);"));
+		p.processInput(string("INSERT INTO anim VALUES FROM RELATION animals;"));
+		p.processInput(string("SHOW anim;"));*/
+		string line;
+		fstream f;
+		f.open("input.txt");
+		while(getline(f, line))
+			p.process_input(line);
 		int i;
-    */
-      int i;
        cin >> i; 
       
 }

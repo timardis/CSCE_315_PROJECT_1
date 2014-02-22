@@ -29,14 +29,14 @@ public:
   
        
     // Command Functions 
+    
     //void exit(); 
     void show(string table_name); 
     void create(string table_name, vector<string> attributes, vector<string> attribute_types, vector<string> keys); 
     void update(string relation_name, vector<string> attribute, vector<string> data, int row_index); 
     void insert_tuple(string relation_name, vector<string> tuple); 
     void insert_view(string relation_name, string view_name); 
-    void update(string relation_name, vector<string> attr_names, vector<string> values, Condition& c);
-    void delete_from(string table_name, Condition& c);   
+    void remove(string table_name, Condition& c);   
     void remove_table(string table_name); 
 	void rename_column(string table_name, string column_old_name, string column_new_name);
 	void remove_view_table(string table_name);
