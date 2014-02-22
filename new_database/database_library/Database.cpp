@@ -92,11 +92,12 @@ Table Database::select(string view_name, string in_table_name, Condition& c){
 } 
   
 Table Database::project(string view_name, string in_table_name, vector<string> attributes){ 
+	Table* t1 = NULL;
 	//check if the table exists already in view list
     if(view_name == in_table_name) 
         throw runtime_error("Project: both name equal"); 
     int index = get_relation_index(in_table_name); 
-    Table* TEMP_VIEW_TABLE = NULL; 
+    Table* temp_view_table = NULL; 
     vector<Column> columns; 
  
     if(index == -1){
@@ -106,46 +107,37 @@ Table Database::project(string view_name, string in_table_name, vector<string> a
             throw runtime_error("Project: no such view exists"); 
 
         else{ 
-            bool ATTRIBUTE_CHECK = false;
+            bool attribute_check = false;
 			//if the attributes of viewing list already exists as the attributes of before, it means,
 			//attributes exists
             for(unsigned int i = 0; i<attributes.size(); i++){ 
                 for(unsigned int j=0; j<viewing_list[index].get_table_columns().size(); j++) 
-                    if(attributes[i] == viewing_list[index].get_table_columns()[i].get_column_name()){ 
+                    if(attributes[i] == viewing_list[index].get_table_columns()[j].get_column_name()){ 
                         columns.push_back(viewing_list[index].get_table_columns()[j]); 
-                        ATTRIBUTE_CHECK = true; 
+                        attribute_check = true; 
+						break;
                     } 
 				//if attributes do not exist correctly, throw an error
-                if(ATTRIBUTE_CHECK == false)  
+                if(attribute_check == false)  
                     throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")"); 
             } 
 
-            vector<string> t_vec; 
-            vector<Column> c; 
-
-			//creating the projection table with attributes data of relational table
-            for(unsigned int i = 0; i< relational_list[index].get_table_columns().size(); i++){ 
-                vector<string> temp_vec; 
-                  
-                for(unsigned int j=0; j<columns.size(); j++) 
-                    c.push_back(viewing_list[index].get_table_columns()[j]); 
-            } 
             Table t(view_name, columns); 
             viewing_list.push_back(t); 
-			TEMP_VIEW_TABLE = &t;
+			temp_view_table = &t;
         } 
     } 
     else{ 
 
 		//checks for attribute check again and throws an error if it doesn't exist
-        bool ATTRIBUTE_CHECK = false; 
+        bool attribute_check = false; 
         for(unsigned int i = 0; i<attributes.size(); i++){ 
             for(unsigned int j=0; j<relational_list[index].get_table_columns().size(); j++) 
                 if(attributes[i] == relational_list[index].get_table_columns()[j].get_column_name()){ 
                     columns.push_back(relational_list[index].get_table_columns()[j]); 
-                    ATTRIBUTE_CHECK = true; 
+                    attribute_check = true; 
                 } 
-            if(ATTRIBUTE_CHECK == false) 
+            if(attribute_check == false) 
                 throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")"); 
         }
 
@@ -159,9 +151,9 @@ Table Database::project(string view_name, string in_table_name, vector<string> a
         } 
          Table t2(view_name, columns); 
         viewing_list.push_back(t2); 
-		TEMP_VIEW_TABLE = &t2;
+		temp_view_table = &t2;
     } 
-	return *TEMP_VIEW_TABLE;
+	return *temp_view_table;
 } 
   
 Table Database::rename(string new_view, string existing_table, vector<string> attributes){ 
