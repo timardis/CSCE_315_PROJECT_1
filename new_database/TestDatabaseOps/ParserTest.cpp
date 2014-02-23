@@ -13,7 +13,7 @@ namespace TestDatabaseOps
 		TEST_METHOD(ParserShouldCallCreateFunction)
 		{
 			Parser p;
-			Assert::AreEqual((int)p.get_input_type(string(" CREATE TABLE <-select(kind==\"dogs\"animals")), (int)CREATE);
+			Assert::AreEqual((int)p.get_input_type(string(" CREATE TABLE <-select(kind==\"dogs\"animals")), (int)CREATE_);
 		}
 
 	};

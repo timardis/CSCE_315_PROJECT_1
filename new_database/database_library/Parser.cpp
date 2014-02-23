@@ -62,31 +62,31 @@ void Parser::process_query()
 void Parser::process_command(InputType type)
 {
 	switch (type){
-	case CREATE:
+	case CREATE_:
 		create_table();
 		break;
-	case INSERT:
+	case INSERT_:
 		insert_into();
 		break;
-	case OPEN:
+	case OPEN_:
 		open();
 		break;
-	case CLOSE:
+	case CLOSE_:
 		close();
 		break;
-	case WRITE:
+	case WRITE_:
 		write();
 		break;
-	case SHOW:
+	case SHOW_:
 		show();
 		break;
-	case EXIT:
+	case EXIT_:
 		exit();
 		break;
-	case DELETE:
+	case DELETE_:
 		delete_from();
 		break;
-	case UPDATE:
+	case UPDATE_:
 		update_to();
 		break;
 	default:
@@ -175,7 +175,7 @@ void Parser::write(){
 					output_file << tuple_row[j] << ");" << endl;
 				}
 				else{
-					output_file << "\"" <<  tuple_row[j] << "\";" << endl;
+					output_file << "\"" <<  tuple_row[j] << "\");" << endl;
 				}
 			}
 		}
@@ -228,39 +228,39 @@ InputType Parser::get_input_type(string _input)
 
     if(op == string("OPEN"))
     {
-      return OPEN;
+      return OPEN_;
     }
     else if(op == string("CLOSE"))
     {
-      return CLOSE;
+      return CLOSE_;
     }
     else if(op == string("WRITE"))
     {
-      return WRITE;
+      return WRITE_;
     }
     else if(op == string("EXIT"))
     {
-      return EXIT;
+      return EXIT_;
     }
     else if(op == string("SHOW"))
     {
-      return SHOW;
+      return SHOW_;
     }
     else if(op == string("CREATE"))
     {
-      return CREATE;
+      return CREATE_;
     }
     else if(op == string("UPDATE"))
     {
-      return UPDATE;
+      return UPDATE_;
     }
     else if(op == string("INSERT"))
     {
-      return INSERT;
+      return INSERT_;
     }
     else if(op == string("DELETE"))
     {
-      return DELETE;
+      return DELETE_;
     }
     else
     {
@@ -275,28 +275,28 @@ InputType Parser::get_input_type(string _input)
 
 ExpressionType Parser::get_expression_type(string _input){
 	if(_input == "select"){
-		return SELECT;
+		return SELECT_;
 	}
 	else if(_input == "project"){
-		return PROJECT;
+		return PROJECT_;
 	}
 	else if(_input == "rename"){
-		return RENAME;
+		return RENAME_;
 	}
 	else if(_input == "+"){
-		return UNION;
+		return UNION_;
 	}
 	else if(_input == "-"){
-		return DIFFERENCE;
+		return DIFFERENCE_;
 	}
 	else if(_input == "*"){
-		return PRODUCT;
+		return PRODUCT_;
 	}
 	else if(_input == "JOIN"){
-		return NATURAL_JOIN;
+		return NATURAL_JOIN_;
 	}
 	else{
-		return ATOMIC_EXPR;
+		return ATOMIC_EXPR_;
 	}
 
 }
@@ -504,13 +504,13 @@ string Parser::expression(){
 	string tok = tokenizer.pop();
 	string view_name;
 	ExpressionType ex = get_expression_type(tok);
-	if(ex == SELECT){
+	if(ex == SELECT_){
 		view_name = selection();
 	}
-	else if(ex == PROJECT){
+	else if(ex == PROJECT_){
 		view_name = projection();
 	}
-	else if(ex == RENAME){
+	else if(ex == RENAME_){
 		view_name = rename();
 	}
 	 
@@ -519,19 +519,19 @@ string Parser::expression(){
 		string tok1 = tokenizer.peek();
 		
 		ExpressionType ex1 = get_expression_type(tok1);
-		if(ex1 == UNION){
+		if(ex1 == UNION_){
 			tokenizer.pop();
 			view_name = set_union_parser(view_name);
 		}
-		else if(ex1 == DIFFERENCE){
+		else if(ex1 == DIFFERENCE_){
 			tokenizer.pop();
 			view_name = set_difference_parser(view_name);
 		}
-		else if(ex1 == PRODUCT){
+		else if(ex1 == PRODUCT_){
 			tokenizer.pop();
 			view_name = cross_product_parser(view_name);
 		}
-		else if(ex1 == NATURAL_JOIN){
+		else if(ex1 == NATURAL_JOIN_){
 			tokenizer.pop();
 			view_name = set_natural_join(view_name);
 		}

@@ -20,7 +20,7 @@ void Tokenizer::tokenize_input(string input)
 		for (int index = 0; index < input_length; index++){
 			char ch = _input[index];
 			//putting stuff with alpha or digit or _ in one token
-			while (isalpha(ch) || isdigit(ch) || ch == '_'){
+			while (isalpha(ch) || isdigit(ch) || ch == '_'|| ch == '@' || ch == '.'){
 				s_for_token += ch;
 				index++;
 				ch = _input[index];	

@@ -2,7 +2,6 @@
 #define PARSER_H
 
 #include "Database.h"
-//#include "Tokenizer.h"
 #include <iostream>
 #include <string>
 #include <regex>
@@ -12,15 +11,14 @@ using namespace std;
 
 enum ExpressionType
 {
-  ATOMIC_EXPR, SELECT, PROJECT, RENAME, 
-  UNION, DIFFERENCE, PRODUCT, NATURAL_JOIN
+	ATOMIC_EXPR_, SELECT_, PROJECT_, RENAME_, 
+	UNION_, DIFFERENCE_, PRODUCT_, NATURAL_JOIN_
 };
 
 enum InputType
 {
   // Commands
-  OPEN, CLOSE, WRITE, EXIT, SHOW, 
-  CREATE, UPDATE, INSERT, DELETE,
+  OPEN_, CLOSE_, WRITE_, EXIT_, SHOW_, CREATE_, UPDATE_, INSERT_, DELETE_,
   
   // Query
   QUERY
