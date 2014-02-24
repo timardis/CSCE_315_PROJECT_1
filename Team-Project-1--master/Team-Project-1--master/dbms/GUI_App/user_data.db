@@ -1,0 +1,4 @@
+CREATE TABLE user_data (user_ID INTEGER, user_name VARCHAR(20), address VARCHAR(20), phone_number VARCHAR(20), email VARCHAR(20), classification VARCHAR(20), Gender VARCHAR(20)) PRIMARY KEY (user_ID, user_name);
+INSERT INTO user_data VALUES FROM (123, "John", "111 Briar Forest", "209 - 123 - 2345", "john@gmail.com", "SENIOR", "MALE");
+INSERT INTO user_data VALUES FROM (124, "Jane", "1232 Briar Park", "210 - 100 - 1234", "jane@live.com", "JUNIOR", "FEMALE");
+INSERT INTO user_data VALUES FROM (126, "Emily", "120 Texas Ave", "210 - 120 - 1200", "eking@live.com", "SOPHMORE", "FEMALE");

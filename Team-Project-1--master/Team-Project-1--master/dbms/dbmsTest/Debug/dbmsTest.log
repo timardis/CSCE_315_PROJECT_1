@@ -1,0 +1,17 @@
+﻿Build started 2/24/2014 12:39:19 PM.
+     1>Project "C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\dbmsTest\dbmsTest.vcxproj" on node 3 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\UnitTest\include" /ZI /nologo /W0 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\dbmsTest.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /FC /errorReport:prompt unittest1.cpp
+         unittest1.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\UnitTest\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.lib" /MACHINE:X86 /DLL Debug\stdafx.obj
+         Debug\unittest1.obj
+         "C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbms.lib"
+            Creating library C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.lib and object C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.exp
+     1>dbms.lib(parser.obj) : error LNK2019: unresolved external symbol "public: void __thiscall parser::update_data_vec(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?update_data_vec@parser@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) referenced in function "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __thiscall parser::show_cmd(void)" (?show_cmd@parser@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ)
+     1>C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbmsTest.dll : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\dbmsTest\dbmsTest.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.49

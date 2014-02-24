@@ -1,0 +1,17 @@
+﻿Build started 2/24/2014 12:56:50 PM.
+     1>Project "C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\dbms\dbms.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W0 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt parser.cpp
+         parser.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbms.lib" /NOLOGO Debug\database.obj
+         Debug\entity.obj
+         Debug\parser.obj
+         Debug\table.obj
+         Debug\tokenizer.obj
+         dbms.vcxproj -> C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\Debug\dbms.lib
+     1>Done Building Project "C:\Users\rsurbhi\Downloads\Team-Project-1--master\Team-Project-1--master\dbms\dbms\dbms.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.79
