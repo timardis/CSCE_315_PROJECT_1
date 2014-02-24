@@ -1,0 +1,1 @@
+CREATE TABLE contact_info (user_name VARCHAR(20), address VARCHAR(20), email VARCHAR(20), phone_number VARCHAR(20)) PRIMARY KEY (INSERT INTO contact_info VALUES FROM ("Emily", "120 Texas Ave", "eking@live.com", "210 - 120 - 1200");

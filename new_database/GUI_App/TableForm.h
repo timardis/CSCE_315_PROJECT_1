@@ -50,7 +50,8 @@ namespace GUI_App {
 		/// </summary>
 		System::ComponentModel::Container ^components;
 		Parser *parser;
-		std::string *current_table;
+	private: System::Windows::Forms::Button^  button1;
+			 std::string *current_table;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -61,6 +62,7 @@ namespace GUI_App {
 		{
 			this->combo_select = (gcnew System::Windows::Forms::ComboBox());
 			this->view_table = (gcnew System::Windows::Forms::DataGridView());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->view_table))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -83,14 +85,25 @@ namespace GUI_App {
 			this->view_table->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->view_table->Location = System::Drawing::Point(12, 36);
 			this->view_table->Name = L"view_table";
-			this->view_table->Size = System::Drawing::Size(814, 403);
+			this->view_table->Size = System::Drawing::Size(869, 418);
 			this->view_table->TabIndex = 1;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(38, 472);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(117, 36);
+			this->button1->TabIndex = 2;
+			this->button1->Text = L"New year";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &TableForm::button1_Click);
 			// 
 			// TableForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(838, 490);
+			this->ClientSize = System::Drawing::Size(893, 529);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->view_table);
 			this->Controls->Add(this->combo_select);
 			this->Name = L"TableForm";
@@ -125,11 +138,27 @@ namespace GUI_App {
 					 parser->process_input(command);
 					 command = "WRITE upperclassmen;";
 					 parser->process_input(command);
+					 //fix set difference function
+					 command = "underclassmen <- user_data - upperclassmen ;";
 
-
-
-					 command = "underclassmen <- user_data - upperclassmen;";
 					 parser->process_input(command);
+					 command = "WRITE underclassmen;";
+					 parser->process_input(command);
+				 }
+				 else  if (table_name == "contact_info")
+				 {
+					 command = "contact_info <- project(user_name, address, email, phone_number) user_data;";
+					 parser->process_input(command);
+					 command = "WRITE contact_info;";
+					 parser->process_input(command);
+				 }
+				 else if (table_name == "detailed_grades")
+				 {
+					 command = "detailed_grades <- gradebook_data JOIN user_data;";
+					 parser->process_input(command);
+					 command = "WRITE detailed_grades;";
+					 parser->process_input(command);
+
 				 }
 
 				command = "SHOW " + table_name + ";";
@@ -178,7 +207,7 @@ namespace GUI_App {
 					 *current_table = std::string("roster_data");
 					 break;
 				 case 4:
-					 *current_table = std::string("grade_data");
+					 *current_table = std::string("gradebook_data");
 					 break;
 				 case 5:
 					 *current_table = std::string("detailed_grades");
@@ -205,8 +234,30 @@ namespace GUI_App {
 				 this->parser->process_input("OPEN user_data;");
 				 this->parser->process_input("OPEN assignment_data;");
 				 this->parser->process_input("OPEN section_data;");
+				 this->parser->process_input("OPEN gradebook_data;");
+				 this->parser->process_input("OPEN roster_data;");
 
 				 
 	}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+			 std::string command;
+			 command = "DELETE FROM user_data WHERE (classification == \"SENIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE user_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE user_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
+			 parser->process_input(command);
+			 command = "UPDATE user_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
+			 parser->process_input(command);
+			 command = "WRITE user_data;";
+			 parser->process_input(command);
+
+			 //updating all the other tables that are using user_Data
+			 update_view("contact_info");
+			 update_view("upperclassmen");
+			 update_view("underclassmen");
+			 update_view("user_data");
+
+}
 };
 }

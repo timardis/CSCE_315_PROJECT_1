@@ -1,0 +1,1 @@
+CREATE TABLE underclassmen (user_ID INTEGER, user_name VARCHAR(20), address VARCHAR(20), phone_number VARCHAR(20), email VARCHAR(20), classification VARCHAR(20), Gender VARCHAR(20)) PRIMARY KEY (user_ID, user_name);

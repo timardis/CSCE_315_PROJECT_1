@@ -93,76 +93,68 @@ Table Database::select(string view_name, string in_table_name, Condition& c){
 } 
   
 Table Database::project(string view_name, string in_table_name, vector<string> attributes){ 
+	Table* t1 = NULL;
 	//check if the table exists already in view list
-    if(view_name == in_table_name) 
-        throw runtime_error("Project: both name equal"); 
-    int index = get_relation_index(in_table_name); 
-    Table* TEMP_VIEW_TABLE = NULL; 
-    vector<Column> columns; 
- 
-    if(index == -1){
-		 //throws an error if the table doesn't exist in relational table
-        index = get_view_index(in_table_name); 
-        if(index == -1) 
-            throw runtime_error("Project: no such view exists"); 
+	if (view_name == in_table_name)
+		throw runtime_error("Project: both name equal");
+	int index = get_relation_index(in_table_name);
+	Table* temp_view_table = NULL;
+	vector<Column> columns;
 
-        else{ 
-            bool ATTRIBUTE_CHECK = false;
+	if (index == -1){
+		//throws an error if the table doesn't exist in relational table
+		index = get_view_index(in_table_name);
+		if (index == -1)
+			throw runtime_error("Project: no such view exists");
+
+		else{
+			bool attribute_check = false;
 			//if the attributes of viewing list already exists as the attributes of before, it means,
 			//attributes exists
-            for(unsigned int i = 0; i<attributes.size(); i++){ 
-                for(unsigned int j=0; j<viewing_list[index].get_table_columns().size(); j++) 
-                    if(attributes[i] == viewing_list[index].get_table_columns()[i].get_column_name()){ 
-                        columns.push_back(viewing_list[index].get_table_columns()[j]); 
-                        ATTRIBUTE_CHECK = true; 
-                    } 
+			for (unsigned int i = 0; i<attributes.size(); i++){
+				for (unsigned int j = 0; j<viewing_list[index].get_table_columns().size(); j++)
+				if (attributes[i] == viewing_list[index].get_table_columns()[j].get_column_name()){
+					columns.push_back(viewing_list[index].get_table_columns()[j]);
+					attribute_check = true;
+					break;
+				}
 				//if attributes do not exist correctly, throw an error
-                if(ATTRIBUTE_CHECK == false)  
-                    throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")"); 
-            } 
+				if (attribute_check == false)
+					throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")");
+			}
 
-            vector<string> t_vec; 
-            vector<Column> c; 
-
-			//creating the projection table with attributes data of relational table
-            for(unsigned int i = 0; i< relational_list[index].get_table_columns().size(); i++){ 
-                vector<string> temp_vec; 
-                  
-                for(unsigned int j=0; j<columns.size(); j++) 
-                    c.push_back(viewing_list[index].get_table_columns()[j]); 
-            } 
-            Table t(view_name, columns); 
-            viewing_list.push_back(t); 
-			TEMP_VIEW_TABLE = &t;
-        } 
-    } 
-    else{ 
+			Table t(view_name, columns);
+			viewing_list.push_back(t);
+			temp_view_table = &t;
+		}
+	}
+	else{
 
 		//checks for attribute check again and throws an error if it doesn't exist
-        bool ATTRIBUTE_CHECK = false; 
-        for(unsigned int i = 0; i<attributes.size(); i++){ 
-            for(unsigned int j=0; j<relational_list[index].get_table_columns().size(); j++) 
-                if(attributes[i] == relational_list[index].get_table_columns()[j].get_column_name()){ 
-                    columns.push_back(relational_list[index].get_table_columns()[j]); 
-                    ATTRIBUTE_CHECK = true; 
-                } 
-            if(ATTRIBUTE_CHECK == false) 
-                throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")"); 
-        }
+		bool attribute_check = false;
+		for (unsigned int i = 0; i<attributes.size(); i++){
+			for (unsigned int j = 0; j<relational_list[index].get_table_columns().size(); j++)
+			if (attributes[i] == relational_list[index].get_table_columns()[j].get_column_name()){
+				columns.push_back(relational_list[index].get_table_columns()[j]);
+				attribute_check = true;
+			}
+			if (attribute_check == false)
+				throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")");
+		}
 
 		//creating the projection table with attributes data of relational table
-        vector<string> t_vec; 
-        vector<Column> c1; 
-        for(unsigned int i=0; i< relational_list[index].get_table_columns().size(); i++){ 
-           vector<string> temp_vec; 
-           for(unsigned int j=0; j<columns.size(); j++) 
-           c1.push_back(relational_list[index].get_table_columns()[i]); 
-        } 
-         Table t2(view_name, columns); 
-        viewing_list.push_back(t2); 
-		TEMP_VIEW_TABLE = &t2;
-    } 
-	return *TEMP_VIEW_TABLE;
+		vector<string> t_vec;
+		vector<Column> c1;
+		for (unsigned int i = 0; i< relational_list[index].get_table_columns().size(); i++){
+			vector<string> temp_vec;
+			for (unsigned int j = 0; j<columns.size(); j++)
+				c1.push_back(relational_list[index].get_table_columns()[i]);
+		}
+		Table t2(view_name, columns);
+		viewing_list.push_back(t2);
+		temp_view_table = &t2;
+	}
+	return *temp_view_table;
 } 
   
 Table Database::rename(string new_view, string existing_table, vector<string> attributes){ 
@@ -309,7 +301,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
     } 
       
     // copy tuples from relation 2 to view table 
-    for(unsigned int i = 0; i < table2.get_table_columns().size(); ++ i){ 
+   for(unsigned int i = 0; i < table2.get_table_columns().size(); ++ i){ 
             difference_columns.push_back(table2.get_table_columns()[i]); 
     }
     // taking away duplicate columns in there 
@@ -340,7 +332,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
 				for(int l = 0; l < column_index_keys.size(); l++){
                 if(difference_columns[column_index_keys[l]].get_column_data()[j] == difference_columns[column_index_keys[l]].get_column_data()[k]){ 
                    is_true = true;
-					// union_columns[i].delete_data(k); 
+					 //difference_columns[j].delete_data(k); 
                 }
 				else{
 					is_true = false;
@@ -358,7 +350,19 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
         }  
   
   
-    Table t1(view_name, difference_columns); 
+    Table t1(view_name, difference_columns, table1.get_keys());
+	for (int i = 0; i < t1.get_size_of_col_data(); i++)
+	{
+		for (int j = i + 1; j < t1.get_size_of_col_data(); j++)
+		{
+			Tuple tup1 = t1.get_tuple(i);
+			Tuple tup2 = t1.get_tuple(j);
+			if (tup1.get_values() == tup2.get_values())
+			{
+				t1.erase_row(j);
+			}
+		}
+	}
     viewing_list.push_back(t1); 
 	return t1;
   
@@ -382,7 +386,7 @@ Table Database::cross_product(string view_name, string table1_name, string table
         cross_p_column.push_back(c); 
     } 
   
-    Table t1(view_name, cross_p_column); 
+    Table t1(view_name, cross_p_column, table1.get_keys()); 
     // perform cross product  
 	 for (unsigned int i = 0; i < table1.get_size_of_col_data(); i++) 
 		for (unsigned int j = 0; j < table2.get_size_of_col_data(); j++) { 
@@ -438,7 +442,7 @@ Table Database::join(string view_name, string table1_name, string table2_name){
 		join_columns.push_back(c);
 	}
 	//creating table with empty columns but contains all the columns
-		Table t2(view_name, join_columns);
+		Table t2(view_name, join_columns, t1.get_keys());
 	
 	//doing the join function
 	for(int i = 0; i < t1.get_table_columns().size()-1; i++){
