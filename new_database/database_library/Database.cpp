@@ -475,9 +475,20 @@ Table Database::join(string view_name, string table1_name, string table2_name){
 
 		}
 	}
+	if ((int)(t2.get_size_of_col_data() % 2 != 0)){
+		t2.erase_row(t2.get_size_of_col_data() - 1);
+	}
+	for (int i = (int)(t2.get_size_of_col_data()/2.0); i < t2.get_size_of_col_data(); i++){
+		t2.erase_row(i);
+	}
+	if (t2.get_size_of_col_data() != 1){
+		t2.erase_row(t2.get_size_of_col_data() - 1);
+	}
+
   viewing_list.push_back(t2);
   return t2;
-} 
+}
+
   
 /*------------------------------------------------------------------------------------*/
 /* INTERNAL UTILITY FUNCTIONS */

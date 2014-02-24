@@ -181,7 +181,8 @@ namespace GUI_App {
 				 }
 				 else if (table_name == "detailed_grades")
 				 {
-					 command = "detailed_grades <- gradebook_data JOIN user_data;";
+		
+					 command = "detailed_grades <- user_data JOIN gradebook_data;";
 					 parser->process_input(command);
 					 command = "WRITE detailed_grades;";
 					 parser->process_input(command);
@@ -207,12 +208,13 @@ namespace GUI_App {
 	}
 
 	private: System::Void insert_delete_view(std::string table_name){
-				 vector<vector<string>> data;
-				 vector<string> attributes = toString(view_table->Rows->GetFirstRow);
+				 vector<string> data;
+				 //vector<string> attributes = toString(view_table->Rows->GetFirstRow);
 				 
-				 for(int i = 1; i < view_table->Rows->GetRowCount; i++)
-				 {
-					 data = toString(view_table->Rows->GetNextRow);
+			 for (int i = 1; i < view_table->RowTemplate->Height; i++)
+				{
+				 System::String^ dat = (System::String^)view_table->Rows[1]->Cells[1]->Value;
+					data.push_back(toString(dat));
 				 }
 
 
@@ -325,6 +327,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 update_view("upperclassmen");
 			 update_view("underclassmen");
 			 update_view("user_data");
+			 update_view("roster_data");
 
 }
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
