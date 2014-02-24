@@ -51,6 +51,8 @@ namespace GUI_App {
 		System::ComponentModel::Container ^components;
 		Parser *parser;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::Button^  button3;
 			 std::string *current_table;
 
 #pragma region Windows Form Designer generated code
@@ -63,6 +65,8 @@ namespace GUI_App {
 			this->combo_select = (gcnew System::Windows::Forms::ComboBox());
 			this->view_table = (gcnew System::Windows::Forms::DataGridView());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->view_table))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -87,6 +91,7 @@ namespace GUI_App {
 			this->view_table->Name = L"view_table";
 			this->view_table->Size = System::Drawing::Size(869, 418);
 			this->view_table->TabIndex = 1;
+			this->view_table->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &TableForm::view_table_CellContentClick);
 			// 
 			// button1
 			// 
@@ -98,11 +103,33 @@ namespace GUI_App {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &TableForm::button1_Click);
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(657, 481);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(85, 26);
+			this->button2->TabIndex = 3;
+			this->button2->Text = L"OK";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &TableForm::button2_Click);
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(766, 481);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(97, 25);
+			this->button3->TabIndex = 4;
+			this->button3->Text = L"Exit";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &TableForm::button3_Click);
+			// 
 			// TableForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(893, 529);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->view_table);
 			this->Controls->Add(this->combo_select);
@@ -175,6 +202,8 @@ namespace GUI_App {
 						view_table->Rows[i - 1]->Cells[j]->Value = fromString(vec.at(i).at(j));
 					}
 				}
+
+
 	}
 
 	private: System::Void combo_select_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -258,6 +287,17 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 update_view("underclassmen");
 			 update_view("user_data");
 
+}
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+			 std::string command = "EXIT;";
+			parser->process_input(command);
+			Application::Exit();
+
+}
+private: System::Void view_table_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 }
 };
 }
