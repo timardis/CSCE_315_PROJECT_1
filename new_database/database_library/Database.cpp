@@ -123,7 +123,7 @@ Table Database::project(string view_name, string in_table_name, vector<string> a
 					throw runtime_error("Project: no such attribute exists (" + attributes[i] + ")");
 			}
 
-			Table t(view_name, columns);
+			Table t(view_name, columns, attributes);
 			viewing_list.push_back(t);
 			temp_view_table = &t;
 		}
@@ -291,7 +291,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
         throw runtime_error("set difference: non-matching attributes"); 
   
     // set title and copy keys 
-    vector<Column> difference_columns; 
+   vector<Column> difference_columns; 
 
 	vector<string> key = table1.get_keys();
   
@@ -351,6 +351,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
   
   
     Table t1(view_name, difference_columns, table1.get_keys());
+	Table t2 = set_union("r", table1_name, table2_name);
 	for (int i = 0; i < t1.get_size_of_col_data(); i++)
 	{
 		for (int j = i + 1; j < t1.get_size_of_col_data(); j++)
@@ -363,6 +364,7 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
 			}
 		}
 	}
+
     viewing_list.push_back(t1); 
 	return t1;
   

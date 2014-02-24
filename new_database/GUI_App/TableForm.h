@@ -206,6 +206,18 @@ namespace GUI_App {
 
 	}
 
+	private: System::Void insert_delete_view(std::string table_name){
+				 vector<vector<string>> data;
+				 vector<string> attributes = toString(view_table->Rows->GetFirstRow);
+				 
+				 for(int i = 1; i < view_table->Rows->GetRowCount; i++)
+				 {
+					 data = toString(view_table->Rows->GetNextRow);
+				 }
+
+
+			 }
+
 	private: System::Void combo_select_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 				 view_table->Rows->Clear();
 				 view_table->Columns->Clear();
@@ -270,6 +282,8 @@ namespace GUI_App {
 	}
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 			 std::string command;
+
+			 //updating user_data
 			 command = "DELETE FROM user_data WHERE (classification == \"SENIOR\");";
 			 parser->process_input(command);
 			 command = "UPDATE user_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
@@ -280,6 +294,31 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 parser->process_input(command);
 			 command = "WRITE user_data;";
 			 parser->process_input(command);
+
+			 //updating gradebook
+			 command = "DELETE FROM gradebook_data WHERE (classification == \"SENIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE gradebook_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE gradebook_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
+			 parser->process_input(command);
+			 command = "UPDATE gradebook_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
+			 parser->process_input(command);
+			 command = "WRITE gradebook_data;";
+			 parser->process_input(command);
+
+			 //updating roster
+			 command = "DELETE FROM roster_data WHERE (classification == \"SENIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE roster_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
+			 parser->process_input(command);
+			 command = "UPDATE roster_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
+			 parser->process_input(command);
+			 command = "UPDATE roster_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
+			 parser->process_input(command);
+			 command = "WRITE roster_data;";
+			 parser->process_input(command);
+
 
 			 //updating all the other tables that are using user_Data
 			 update_view("contact_info");
