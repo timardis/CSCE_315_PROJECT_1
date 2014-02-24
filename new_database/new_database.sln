@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "database_library", "databas
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDatabaseOps", "TestDatabaseOps\TestDatabaseOps.vcxproj", "{7717A097-F2EB-4049-A5B4-2FBD4031A152}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DatabaseGUI", "DatabaseGUI\DatabaseGUI.vcxproj", "{B484C2D0-E997-436B-A828-B3113E8567FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI_App", "GUI_App\GUI_App.vcxproj", "{8555C17E-B561-4656-A37A-8C8D05D610A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{7717A097-F2EB-4049-A5B4-2FBD4031A152}.Debug|Win32.Build.0 = Debug|Win32
 		{7717A097-F2EB-4049-A5B4-2FBD4031A152}.Release|Win32.ActiveCfg = Release|Win32
 		{7717A097-F2EB-4049-A5B4-2FBD4031A152}.Release|Win32.Build.0 = Release|Win32
-		{B484C2D0-E997-436B-A828-B3113E8567FF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B484C2D0-E997-436B-A828-B3113E8567FF}.Debug|Win32.Build.0 = Debug|Win32
-		{B484C2D0-E997-436B-A828-B3113E8567FF}.Release|Win32.ActiveCfg = Release|Win32
-		{B484C2D0-E997-436B-A828-B3113E8567FF}.Release|Win32.Build.0 = Release|Win32
+		{8555C17E-B561-4656-A37A-8C8D05D610A0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8555C17E-B561-4656-A37A-8C8D05D610A0}.Debug|Win32.Build.0 = Debug|Win32
+		{8555C17E-B561-4656-A37A-8C8D05D610A0}.Release|Win32.ActiveCfg = Release|Win32
+		{8555C17E-B561-4656-A37A-8C8D05D610A0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

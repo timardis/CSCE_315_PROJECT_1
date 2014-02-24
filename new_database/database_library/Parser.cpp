@@ -216,7 +216,7 @@ void Parser::show(){
 		throw runtime_error("wrong function call");
 	}
 	string table_name = atomic_expression();
-	db.show(table_name);
+	data_vec = db.show(table_name);
 }
 
 InputType Parser::get_input_type(string _input)

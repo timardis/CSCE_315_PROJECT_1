@@ -18,6 +18,7 @@ private:
     void print_table(Table& t); 
    
 public: 
+
     // Query Functions 
 	Table select(string view_name, string in_table_name, Condition& c); 
     Table project(string view_name, string in_table_name, vector<string> attributes); 
@@ -30,7 +31,7 @@ public:
        
     // Command Functions 
     //void exit(); 
-    void show(string table_name); 
+    vector<vector<string>> show(string table_name); 
     void create(string table_name, vector<string> attributes, vector<string> attribute_types, vector<string> keys); 
     void update(string relation_name, vector<string> attribute, vector<string> data, Condition& c); 
     void insert_tuple(string relation_name, vector<string> tuple); 

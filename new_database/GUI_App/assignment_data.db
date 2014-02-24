@@ -1,0 +1,6 @@
+CREATE TABLE assignment_data (assign_ID INTEGER, assign_name VARCHAR(20), assign_points INTEGER, assign_date VARCHAR(20), due_date VARCHAR(20), type VARCHAR(20), weight VARCHAR(20)) PRIMARY KEY (assign_ID, assign_name);
+INSERT INTO assignment_data VALUES FROM (12, "Cultural assignment", 100, "Jan 21 , 2014", "Feb 21 , 2014", "HOMEWORK", "0.05");
+INSERT INTO assignment_data VALUES FROM (14, "Executive summary", 100, "March 21 , 2014", "April 21 , 2014", "PROJECT", "0.20");
+INSERT INTO assignment_data VALUES FROM (15, "Midterm", 100, "March 15 , 2014", "March 15 , 2014", "TEST", "0.50");
+INSERT INTO assignment_data VALUES FROM (4363456, "fasdf", 634, "asdsadwsd", "sad", "df", "sdewfws");
+INSERT INTO assignment_data VALUES FROM (45354, "dfs", 34, "dfd", "asd", "adss", "dsa");

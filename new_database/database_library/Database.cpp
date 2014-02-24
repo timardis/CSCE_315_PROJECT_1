@@ -68,7 +68,7 @@ Table Database::select(string view_name, string in_table_name, Condition& c){
 		col[i].erase_whole_data();
 	}
 
-	Table new_table(view_name, col);
+	Table new_table(view_name, col, table_copy.get_keys());
 
   for(int i = 0; i < table_copy.get_size_of_col_data(); i++){
 		Tuple row_tup = table_copy.get_tuple(i);
@@ -79,6 +79,7 @@ Table Database::select(string view_name, string in_table_name, Condition& c){
       new_table.put_row(selected_row);
 		}
 	}
+  
 
   if(target_table_is_in_relation_list)
   {
@@ -271,7 +272,7 @@ Table Database::set_union(string view_name, string table1_name, string table2_na
             } 
         }  
   
-    Table t1(view_name, union_columns); 
+    Table t1(view_name, union_columns,table1.get_keys()); 
     viewing_list.push_back(t1); 
 	return t1;
       
@@ -513,15 +514,41 @@ void Database::print_table(Table& t){
 /*------------------------------------------------------------------------------------*/
 /* COMMAND FUNCTIONS */
 /*------------------------------------------------------------------------------------*/
-void Database::show(string table_name){ 
+vector<vector<string>> Database::show(string table_name){ 
     int index; 
   
-    if((index = get_relation_index(table_name)) != -1)  
-        print_table(relational_list[index]); 
-    else if((index = get_view_index(table_name)) != -1) 
-        print_table(viewing_list[index]); 
+	Table* table;
+
+	if ((index = get_relation_index(table_name)) != -1)
+	{
+		table = &relational_list[index];
+	}
+	else if ((index = get_view_index(table_name)) != -1)
+	{
+		table = &viewing_list[index];
+	}
     else
         throw runtime_error("show: no such table"); 
+
+	print_table(*table);
+
+	//  push back column names
+
+	vector<vector<string>> vec;
+	vector<string> col_names;
+	for (int i = 0; i < table->get_table_columns().size(); i++)
+	{
+		col_names.push_back(table->get_table_columns()[i].get_column_name());
+	}
+	vec.push_back(col_names);
+
+	for (int i = 0; i < table->get_size_of_col_data(); i++)
+	{
+		
+		vec.push_back(table->get_row(i));
+	}
+
+	return vec;
 } 
   
 void Database::create(string table_name, vector<string> attributes, 

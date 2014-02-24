@@ -33,9 +33,12 @@ private:
   int view_num;
   Tokenizer tokenizer;
 
+  
 public:
   Parser();
 
+  //  data for show()
+  vector<vector<string>> data_vec;
 
   void process_input(string _input);
   InputType get_input_type(string _input);

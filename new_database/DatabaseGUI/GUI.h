@@ -75,7 +75,7 @@ namespace DatabaseGUI {
 	private: System::Windows::Forms::Button^  btn_add;
 
 		/// Parser pointer
-		Parser* parser;
+		//Parser* parser;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -84,11 +84,11 @@ namespace DatabaseGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			parser = new Parser();
+			//parser = new Parser();
 
-			parser->process_input("OPEN user_data;");
-			parser->process_input("OPEN assignment_data;");
-			parser->process_input("OPEN section_data;");
+			//parser->process_input("OPEN user_data;");
+			//parser->process_input("OPEN assignment_data;");
+			//parser->process_input("OPEN section_data;");
 
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
@@ -516,8 +516,8 @@ namespace DatabaseGUI {
 							 + toString(textBox2->Text) + ");";
 						 break;
 					 }
-					 parser->process_input(line);
-					 parser->process_input("WRITE section_data");
+					 //parser->process_input(line);
+					 //parser->process_input("WRITE section_data");
 					 clear_all_7();
 		}
 };
