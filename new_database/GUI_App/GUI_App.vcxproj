@@ -84,17 +84,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="MyForm1.cpp" />
     <ClCompile Include="TableForm.cpp" />
+    <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TableForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TableForm.resx">
       <DependentUpon>TableForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

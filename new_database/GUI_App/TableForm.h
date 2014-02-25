@@ -43,16 +43,18 @@ namespace GUI_App {
 	private: System::Windows::Forms::ComboBox^  combo_select;
 	protected:
 	private: System::Windows::Forms::DataGridView^  view_table;
+	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 		Parser *parser;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
+
 			 std::string *current_table;
 
 #pragma region Windows Form Designer generated code
@@ -109,7 +111,7 @@ namespace GUI_App {
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(85, 26);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"OK";
+			this->button2->Text = L"Add";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &TableForm::button2_Click);
 			// 
@@ -340,6 +342,9 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 
 }
 private: System::Void view_table_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+}
+private: System::Void bindingSource1_CurrentChanged(System::Object^  sender, System::EventArgs^  e) {
+
 }
 };
 }
