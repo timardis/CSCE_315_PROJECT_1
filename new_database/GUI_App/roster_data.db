@@ -1,3 +1,5 @@
-CREATE TABLE roster_data (userID INTEGER, user_name VARCHAR(20), section_id INTEGER, classification VARCHAR(20)) PRIMARY KEY (userID, user_name);
-INSERT INTO roster_data VALUES FROM (124, "Jane", 13, "SENIOR");
-INSERT INTO roster_data VALUES FROM (126, "Emily", 15, "JUNIOR");
+CREATE TABLE roster_data (user_ID INTEGER, section_ID INTEGER) PRIMARY KEY (user_ID, section_ID);
+
+INSERT INTO roster_data VALUES FROM (123, 13);
+INSERT INTO roster_data VALUES FROM (124, 13);
+INSERT INTO roster_data VALUES FROM (125, 14 );

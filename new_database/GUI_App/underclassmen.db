@@ -1,2 +1,5 @@
-CREATE TABLE underclassmen (user_ID INTEGER, user_name VARCHAR(20), address VARCHAR(20), phone_number VARCHAR(20), email VARCHAR(20), classification VARCHAR(20), Gender VARCHAR(20)) PRIMARY KEY (user_ID, user_name);
-INSERT INTO underclassmen VALUES FROM (126, "Emily", "120 Texas Ave", "210 - 120 - 1200", "eking@live.com", "JUNIOR", "FEMALE");
+CREATE TABLE underclassmen (user_ID INTEGER, user_name VARCHAR(20), address VARCHAR(20), phone_number VARCHAR(20), email VARCHAR(20), classification VARCHAR(20), Gender VARCHAR(20)) PRIMARY KEY (user_ID);
+INSERT INTO underclassmen VALUES FROM (124, "Jane", "1232 Briar Park", "210 - 100 - 1234", "jane@live.com", "SOPHOMORE", "FEMALE");
+INSERT INTO underclassmen VALUES FROM (126, "Emily", "120 Texas Ave", "210 - 120 - 1200", "eking@live.com", "FRESHMAN", "FEMALE");
+INSERT INTO underclassmen VALUES FROM (128, "Brandon", "120 Krenek Ave", "210 - 342 - 1870", "brandon@live.com", "JUNIOR", "MALE");
+INSERT INTO underclassmen VALUES FROM (130, "Ron", "240 Ron Ave", "210 - 342 - 0970", "ron@live.com", "FRESHMAN", "MALE");

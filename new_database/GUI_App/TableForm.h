@@ -43,18 +43,16 @@ namespace GUI_App {
 	private: System::Windows::Forms::ComboBox^  combo_select;
 	protected:
 	private: System::Windows::Forms::DataGridView^  view_table;
-	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-
+		System::ComponentModel::Container ^components;
 		Parser *parser;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
-
 			 std::string *current_table;
 
 #pragma region Windows Form Designer generated code
@@ -93,11 +91,10 @@ namespace GUI_App {
 			this->view_table->Name = L"view_table";
 			this->view_table->Size = System::Drawing::Size(869, 418);
 			this->view_table->TabIndex = 1;
-			this->view_table->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &TableForm::view_table_CellContentClick);
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(38, 472);
+			this->button1->Location = System::Drawing::Point(12, 475);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(117, 36);
 			this->button1->TabIndex = 2;
@@ -107,17 +104,17 @@ namespace GUI_App {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(657, 481);
+			this->button2->Location = System::Drawing::Point(693, 480);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(85, 26);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"Add";
+			this->button2->Text = L"Save";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &TableForm::button2_Click);
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(766, 481);
+			this->button3->Location = System::Drawing::Point(784, 481);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(97, 25);
 			this->button3->TabIndex = 4;
@@ -188,9 +185,31 @@ namespace GUI_App {
 					 parser->process_input(command);
 					 command = "WRITE detailed_grades;";
 					 parser->process_input(command);
-
 				 }
+         else if (table_name == "roster_data_view")
+         {
+           command = "user_id_name <- project (user_ID, user_name) user_data;";
+           parser->process_input(command);
+           command = "section_id_name <- project (section_ID, section_name) section_data;";
+           parser->process_input(command);
+           command = "roster_data_view <- roster_data JOIN user_id_name;";
+           parser->process_input(command);
+           command = "roster_data_view <- roster_data_view JOIN section_id_name;";
+           parser->process_input(command);
 
+         }
+         else if (table_name == "gradebook_data_view")
+         {
+           command = "user_id_name <- project (user_ID, user_name) user_data;";
+           parser->process_input(command);
+           command = "assignment_id_name <- project (assign_ID, assign_name) assignment_data;";
+           parser->process_input(command);
+           command = "gradebook_data_view <- gradebook_data JOIN user_id_name;";
+           parser->process_input(command);
+           command = "gradebook_data_view <- gradebook_data_view JOIN assignment_id_name;";
+           parser->process_input(command);
+
+         }
 				command = "SHOW " + table_name + ";";
 				parser->process_input(command);
 				vector<vector<std::string>> vec = parser->data_vec;
@@ -249,10 +268,10 @@ namespace GUI_App {
 					 *current_table = std::string("section_data");
 					 break;
 				 case 3:
-					 *current_table = std::string("roster_data");
+					 *current_table = std::string("roster_data_view");
 					 break;
 				 case 4:
-					 *current_table = std::string("gradebook_data");
+					 *current_table = std::string("gradebook_data_view");
 					 break;
 				 case 5:
 					 *current_table = std::string("detailed_grades");
@@ -285,6 +304,9 @@ namespace GUI_App {
 				 
 	}
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+           // NEW YEAR button
+
+
 			 std::string command;
 
 			 //updating user_data
@@ -292,59 +314,65 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 parser->process_input(command);
 			 command = "UPDATE user_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
 			 parser->process_input(command);
-			 command = "UPDATE user_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
+			 command = "UPDATE user_data SET classification = JUNIOR WHERE (classification == \"SOPHOMORE\");";
 			 parser->process_input(command);
-			 command = "UPDATE user_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
+			 command = "UPDATE user_data SET classification = SOPHOMORE WHERE (classification == \"FRESHMAN\");";
 			 parser->process_input(command);
 			 command = "WRITE user_data;";
 			 parser->process_input(command);
 
-			 //updating gradebook
-			 command = "DELETE FROM gradebook_data WHERE (classification == \"SENIOR\");";
-			 parser->process_input(command);
-			 command = "UPDATE gradebook_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
-			 parser->process_input(command);
-			 command = "UPDATE gradebook_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
-			 parser->process_input(command);
-			 command = "UPDATE gradebook_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
-			 parser->process_input(command);
-			 command = "WRITE gradebook_data;";
-			 parser->process_input(command);
-
-			 //updating roster
-			 command = "DELETE FROM roster_data WHERE (classification == \"SENIOR\");";
-			 parser->process_input(command);
-			 command = "UPDATE roster_data SET classification = SENIOR WHERE (classification == \"JUNIOR\");";
-			 parser->process_input(command);
-			 command = "UPDATE roster_data SET classification = JUNIOR WHERE (classification == \"SOPHMORE\");";
-			 parser->process_input(command);
-			 command = "UPDATE roster_data SET classification = SOPHMORE WHERE (classification == \"FRESHMAN\");";
-			 parser->process_input(command);
-			 command = "WRITE roster_data;";
-			 parser->process_input(command);
-
-
-			 //updating all the other tables that are using user_Data
-			 update_view("contact_info");
-			 update_view("upperclassmen");
-			 update_view("underclassmen");
-			 update_view("user_data");
-			 update_view("roster_data");
-
+     
 }
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+           std::string command;
+           std::string compare_string;
+
+           if (*current_table == "user_data" ||
+             *current_table == "roster_data_view" ||
+             *current_table == "gradebook_data_view" ||
+             *current_table == "detailed_grades" ||
+             *current_table == "upperclassmen" ||
+             *current_table == "underclassmen") {
+
+             compare_string = "user_ID";
+           }
+
+           else if (*current_table == "section_data") {
+             compare_string = "section_ID";
+           }
+
+           else if (*current_table == "assignment_data") {
+             compare_string = "section_ID";
+           }
+
+           command = "DELETE FROM " + *current_table + " WHERE (" + compare_string + " >= 0);";
+           parser->process_input(command);
+
+           for (int i = 0; i < view_table->Rows->Count - 1; i++) {
+             command = "INSERT INTO " + *current_table + " VALUES FROM (\"";
+             for (int j = 0; j < view_table->Columns->Count; j++) {
+               command += toString(view_table->Rows[i]->Cells[j]->Value->ToString()) + "\"";
+               if ((j + 1) < view_table->Columns->Count) {
+                 command += ", \"";
+               }
+             }
+             command += ");";
+             parser->process_input(command);
+           }
+
+           command = "WRITE " + *current_table + ";";
+           parser->process_input(command);
 }
 
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+			 parser->process_input("CLOSE section_data;");
+			 parser->process_input("CLOSE assignment_data;");
+			 parser->process_input("CLOSE user_data;");
 			 std::string command = "EXIT;";
-			parser->process_input(command);
+		   	parser->process_input(command);
 			Application::Exit();
 
 }
-private: System::Void view_table_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
-}
-private: System::Void bindingSource1_CurrentChanged(System::Object^  sender, System::EventArgs^  e) {
 
-}
 };
 }

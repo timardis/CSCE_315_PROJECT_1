@@ -1,5 +1,0 @@
-CREATE TABLE roster_data (userID INTEGER, user_name VARCHAR(20), section_id INTEGER) PRIMARY KEY (userID, user_name);
-INSERT INTO roster_data VALUES FROM (123, "John", 13);
-INSERT INTO roster_data VALUES FROM (124, "Jane", 13);
-INSERT INTO roster_data VALUES FROM (125, "Austin", 14);
-INSERT INTO roster_data VALUES FROM (126, "Emily", 15);

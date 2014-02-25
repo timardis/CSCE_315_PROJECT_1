@@ -17,6 +17,7 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Tuple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Column.h" />

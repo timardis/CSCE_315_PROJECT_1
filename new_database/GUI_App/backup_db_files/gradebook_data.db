@@ -1,0 +1,4 @@
+CREATE TABLE gradebook_data (user_ID INTEGER, assign_ID INTEGER, Points_earned INTEGER) PRIMARY KEY (user_ID, assign_ID);
+INSERT INTO gradebook_data VALUES FROM (123, 12, 98);
+INSERT INTO gradebook_data VALUES FROM (124, 14, 88);
+INSERT INTO gradebook_data VALUES FROM (126, 14, 92);

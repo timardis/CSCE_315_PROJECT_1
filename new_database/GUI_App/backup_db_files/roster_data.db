@@ -1,0 +1,10 @@
+CREATE TABLE roster_data (user_ID INTEGER, section_ID INTEGER) PRIMARY KEY (user_ID, section_ID);
+
+INSERT INTO roster_data VALUES FROM (123, 13);
+INSERT INTO roster_data VALUES FROM (124, 13);
+INSERT INTO roster_data VALUES FROM (125, 14);
+INSERT INTO roster_data VALUES FROM (126, 15);
+INSERT INTO roster_data VALUES FROM (127, 14);
+INSERT INTO roster_data VALUES FROM (128, 15);
+INSERT INTO roster_data VALUES FROM (129, 13);
+INSERT INTO roster_data VALUES FROM (130, 13);

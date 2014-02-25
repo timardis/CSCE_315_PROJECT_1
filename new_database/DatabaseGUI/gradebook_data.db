@@ -1,4 +1,0 @@
-CREATE TABLE gradebook_data (user_name VARCHAR(20), assign_name VARCHAR(20), Points_earned INTEGER) PRIMARY KEY (user_name, assign_name);
-INSERT INTO gradebook_data VALUES FROM ("John", "Cultural assignment", 98);
-INSERT INTO gradebook_data VALUES FROM ("John", "Executive summary", 88);
-INSERT INTO gradebook_data VALUES FROM ("Emily", "Midterm", 92);

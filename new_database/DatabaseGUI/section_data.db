@@ -1,6 +1,0 @@
-CREATE TABLE section_data (section_ID INTEGER, section_name VARCHAR(20), start_time VARCHAR(20), end_time VARCHAR(20), day VARCHAR(20), building VARCHAR(20), room VARCHAR(20)) PRIMARY KEY (section_ID, section_name);
-INSERT INTO section_data VALUES FROM (13, "Morning", "8 00 AM", "9 10 AM", "Monday", "Bright", "112");
-INSERT INTO section_data VALUES FROM (14, "Afternoon", "12 10 PM", "1 50 PM", "Tuesday", "Zachery", "111c");
-INSERT INTO section_data VALUES FROM (15, "Evening", "6 10 PM", "8 50 PM", "Friday", "Blocker", "109");
-INSERT INTO section_data VALUES FROM (54235, "fasd", "sda", "w", "fw", "sd", "sfdg");
-INSERT INTO section_data VALUES FROM (53453, "zer", "re", "erzxr", "xer", "re", "erx");

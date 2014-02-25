@@ -326,30 +326,30 @@ Table Database::set_difference(string view_name, string table1_name, string tabl
 
    //removing the duplicate 
  
-        for(int j = 0; j < difference_columns[0].get_column_data().size(); j++){ 
-            for(int k = j+1; k < difference_columns[0].get_column_data().size(); k++){ 
-				bool is_true = false;
-				for(int l = 0; l < column_index_keys.size(); l++){
-                if(difference_columns[column_index_keys[l]].get_column_data()[j] == difference_columns[column_index_keys[l]].get_column_data()[k]){ 
-                   is_true = true;
-					 //difference_columns[j].delete_data(k); 
-                }
-				else{
-					is_true = false;
-					l = column_index_keys.size();
-				}
+  for (int j = 0; j < difference_columns[0].get_column_data().size(); j++){
+    for (int k = j + 1; k < difference_columns[0].get_column_data().size(); k++){
+      bool is_true = false;
+      for (int l = 0; l < column_index_keys.size(); l++){
+        if (difference_columns[column_index_keys[l]].get_column_data()[j] == difference_columns[column_index_keys[l]].get_column_data()[k]){
+          is_true = true;
+          //difference_columns[j].delete_data(k); 
+        }
+        else{
+          is_true = false;
+          l = column_index_keys.size();
+        }
 
-				}
-				if(is_true){
-					for(int i = 0; i < difference_columns.size(); i++){
-						difference_columns[i].delete_data(k); 
-						difference_columns[i].delete_data(j); 
-					}
-				}
-            } 
-        }  
-  
-  
+      }
+      if (is_true){
+        for (int i = 0; i < difference_columns.size(); i++){
+          difference_columns[i].delete_data(k);
+          difference_columns[i].delete_data(j);
+        }
+      }
+    }
+  }
+
+
     Table t1(view_name, difference_columns, table1.get_keys());
 	Table t2 = set_union("r", table1_name, table2_name);
 	for (int i = 0; i < t1.get_size_of_col_data(); i++)
@@ -464,6 +464,7 @@ Table Database::join(string view_name, string table1_name, string table2_name){
 		}
 	}
 
+  /*
 	//deleting the extra tuples that exist
 	for(int i = 0; i < t2.get_size_of_col_data(); i++){
 		for(int j = i+1; j < t2.get_size_of_col_data(); j++){
@@ -475,15 +476,19 @@ Table Database::join(string view_name, string table1_name, string table2_name){
 
 		}
 	}
+
+  
 	if ((int)(t2.get_size_of_col_data() % 2 != 0)){
 		t2.erase_row(t2.get_size_of_col_data() - 1);
 	}
+  
 	for (int i = (int)(t2.get_size_of_col_data()/2.0); i < t2.get_size_of_col_data(); i++){
 		t2.erase_row(i);
 	}
 	if (t2.get_size_of_col_data() != 1){
 		t2.erase_row(t2.get_size_of_col_data() - 1);
 	}
+  */
 
   viewing_list.push_back(t2);
   return t2;
